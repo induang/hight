@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/induang/hight/issues"
   },
-  "homepage": "https://github.com/induang/hight#readme"
+  "homepage": "https://github.com/induang/hight#readme",
+  "devDependencies": {
+    "chrome-types": "^0.1.217",
+    "daisyui": "^3.2.1",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6"
+  }
 }

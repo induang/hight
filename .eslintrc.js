@@ -8,6 +8,7 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'no-unused-vars': 'error',
+    '@typescript-eslint/no-var-requires': 'off',
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {

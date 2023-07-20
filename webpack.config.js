@@ -6,12 +6,12 @@ module.exports = {
     path: path.resolve(__dirname, 'assets/scripts'),
     filename: 'hight.bundle.js',
   },
-	module: {
-		rules: [{test: /\.ts$/, use: 'ts-loader'}],
-	},
-	watch: true,
-	mode: 'production',
-	resolve: {
-		extensions: ['.ts', '.js'],
-	}
+  module: {
+    rules: [{ test: /\.ts$/, use: 'ts-loader' }],
+  },
+  watch: true,
+  mode: 'production',
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
 };

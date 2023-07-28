@@ -40,13 +40,13 @@ export default function hightV1(
 }
 
 function recursiveWrapper(container: JQuery<Node>, hightInfo: HightInfoModel) {
-  return _recursiveWrapper(container, hightInfo, false, 0);
+  return _recursiveWrapper(container, hightInfo, 0, 0);
 }
 
 function _recursiveWrapper(
   container: JQuery<Node>,
   hightInfo: HightInfoModel,
-  startFound: boolean,
+  startFound: number,
   charsHighted: number,
 ) {
   const {
@@ -62,13 +62,14 @@ function _recursiveWrapper(
   const selectionLength = selectionString.length;
 
   container.contents().each((_index, element) => {
+    const focusElement = element as Element;
     if (charsHighted >= selectionLength) return;
 
-    if (element.nodeType !== Node.TEXT_NODE) {
-      const jqElement = $(element);
+    if (focusElement.nodeType !== Node.TEXT_NODE) {
+      const jqElement = $(focusElement);
       if (
         jqElement.is(':visible') &&
-        getComputedStyle(element).visibility !== 'hidden'
+        getComputedStyle(focusElement).visibility !== 'hidden'
       ) {
         [startFound, charsHighted] = _recursiveWrapper(
           jqElement,
@@ -82,27 +83,27 @@ function _recursiveWrapper(
 
     let startIndex = 0;
     if (!startFound) {
-      if (!anchor.is(element) && !focus.is(element)) return;
+      if (!anchor.is(focusElement) && !focus.is(focusElement)) return;
 
-      startFound = true;
+      startFound = 1;
       startIndex = Math.min(
         ...[
-          ...(anchor.is(element) ? [anchorOffset] : []),
-          ...(focus.is(element) ? [focusOffset] : []),
+          ...(anchor.is(focusElement) ? [anchorOffset] : []),
+          ...(focus.is(focusElement) ? [focusOffset] : []),
         ],
       );
     }
 
-    const { nodeValue, parentElement: parent } = element;
+    const { nodeValue, parentElement: parent } = focusElement;
 
-    if (startIndex > nodeValue.length) {
+    if (nodeValue?.length && startIndex > nodeValue?.length) {
       throw new Error(`No match found for hight string '${selectionString}'`);
     }
 
-    const hightTextEl = element.splitText(startIndex);
+    const hightTextEl = (focusElement as unknown as Text).splitText(startIndex);
 
     let i = startIndex;
-    for (; i < nodeValue.length; i++) {
+    for (; nodeValue?.length && i < nodeValue.length; i++) {
       while (
         charsHighted < selectionLength &&
         selectionString[charsHighted].match(/\s/u)
@@ -119,14 +120,14 @@ function _recursiveWrapper(
       }
     }
 
-    if (parent.classList.contains(HIGHLIGHT_CLASS)) return;
+    if (parent?.classList.contains(HIGHLIGHT_CLASS)) return;
 
     const elementCharCount = i - startIndex;
     const insertBeforeElement = hightTextEl.splitText(elementCharCount);
     const hightText = hightTextEl.nodeValue;
 
-    if (hightText.match(/^\s*$/u)) {
-      parent.nomalize();
+    if (parent && hightText?.match(/^\s*$/u)) {
+      parent.normalize();
       return;
     }
 
@@ -139,7 +140,7 @@ function _recursiveWrapper(
     hightNode.dataset.hightId = String(hightIndex);
     hightNode.textContent = hightTextEl.nodeValue;
     hightTextEl.remove();
-    parent.insertBefore(hightNode, insertBeforeElement);
+    parent?.insertBefore(hightNode, insertBeforeElement);
   });
 
   return [startFound, charsHighted];

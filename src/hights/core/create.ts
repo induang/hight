@@ -1,6 +1,6 @@
 import hight from './hight';
 import { store } from '../storage';
-import { ColorModel } from '../utils/types';
+import { ColorModel, SelectionSimplifiedModel } from '../utils/types';
 
 async function createHightBlock(
   color: ColorModel,
@@ -25,10 +25,17 @@ async function createHightBlock(
     color.textColor,
   );
 
+  const selectionSimplified: SelectionSimplifiedModel = {
+    anchorNode: selection.anchorNode!,
+    anchorOffset: selection.anchorOffset,
+    focusNode: selection.focusNode!,
+    focusOffset: selection.focusOffset,
+  };
+
   hight(
     selectionString,
     container,
-    selection,
+    selectionSimplified,
     color.color,
     color.textColor,
     hightBlockIndex,

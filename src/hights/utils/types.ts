@@ -45,8 +45,8 @@ export type HightInfoModel = {
   textColor: string;
   hightIndex: number;
   selectionString: string;
-  anchor: unknown;
+  anchor: JQuery<Node>;
   anchorOffset: number;
-  focus: unknown;
+  focus: JQuery<Node>;
   focusOffset: number;
 };

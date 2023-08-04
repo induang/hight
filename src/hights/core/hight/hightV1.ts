@@ -1,7 +1,6 @@
 import { initializeHightEventListener } from '../../hover';
-import { DELETED_CLASS, HIGHLIGHT_CLASS } from '../../utils/constants';
+import { DELETED_CLASS, HIGHTED_CLASS } from '../../utils/constants';
 import { HightInfoModel, SelectionSimplifiedModel } from '../../utils/types';
-import $ from 'jquery';
 
 export default function hightV1(
   selectionString: string,
@@ -32,7 +31,7 @@ export default function hightV1(
   // absent
 
   const parent = $(container).parent();
-  parent.find(`.${HIGHLIGHT_CLASS}`).each((_i, el) => {
+  parent.find(`.${HIGHTED_CLASS}`).each((_i, el) => {
     initializeHightEventListener(el);
   });
 
@@ -62,14 +61,14 @@ function _recursiveWrapper(
   const selectionLength = selectionString.length;
 
   container.contents().each((_index, element) => {
-    const focusElement = element as Element;
     if (charsHighted >= selectionLength) return;
 
-    if (focusElement.nodeType !== Node.TEXT_NODE) {
-      const jqElement = $(focusElement);
+    if (element.nodeType !== Node.TEXT_NODE) {
+      const jqElement = $(element);
+
       if (
         jqElement.is(':visible') &&
-        getComputedStyle(focusElement).visibility !== 'hidden'
+        getComputedStyle(element as Element).visibility !== 'hidden'
       ) {
         [startFound, charsHighted] = _recursiveWrapper(
           jqElement,
@@ -81,29 +80,33 @@ function _recursiveWrapper(
       return;
     }
 
+    const elementElement = element as Element;
     let startIndex = 0;
     if (!startFound) {
-      if (!anchor.is(focusElement) && !focus.is(focusElement)) return;
+      if (!anchor.is(elementElement) && !focus.is(elementElement)) return;
 
       startFound = 1;
       startIndex = Math.min(
         ...[
-          ...(anchor.is(focusElement) ? [anchorOffset] : []),
-          ...(focus.is(focusElement) ? [focusOffset] : []),
+          ...(anchor.is(elementElement) ? [anchorOffset] : []),
+          ...(anchor.is(elementElement) ? [focusOffset] : []),
         ],
       );
     }
 
-    const { nodeValue, parentElement: parent } = focusElement;
+    const textElement = element as Text;
+    const { nodeValue, parentElement: parent } = textElement;
 
-    if (nodeValue?.length && startIndex > nodeValue?.length) {
-      throw new Error(`No match found for hight string '${selectionString}'`);
+    if (nodeValue && startIndex > nodeValue?.length) {
+      throw new Error(
+        `No match found for highlight string '${selectionString}'`,
+      );
     }
 
-    const hightTextEl = (focusElement as unknown as Text).splitText(startIndex);
+    const hightTextEl = textElement.splitText(startIndex);
 
     let i = startIndex;
-    for (; nodeValue?.length && i < nodeValue.length; i++) {
+    for (; nodeValue && i < nodeValue?.length; i++) {
       while (
         charsHighted < selectionLength &&
         selectionString[charsHighted].match(/\s/u)
@@ -116,24 +119,26 @@ function _recursiveWrapper(
       if (char === selectionString[charsHighted]) {
         charsHighted++;
       } else if (!char.match(/\s/u)) {
-        throw new Error(`No match found for hight string '${selectionString}'`);
+        throw new Error(
+          `No match found for highlight string '${selectionString}'`,
+        );
       }
     }
 
-    if (parent?.classList.contains(HIGHLIGHT_CLASS)) return;
+    if (parent?.classList.contains(HIGHTED_CLASS)) return;
 
     const elementCharCount = i - startIndex;
     const insertBeforeElement = hightTextEl.splitText(elementCharCount);
     const hightText = hightTextEl.nodeValue;
 
-    if (parent && hightText?.match(/^\s*$/u)) {
-      parent.normalize();
+    if (hightText?.match(/\s*$/u)) {
+      parent?.normalize();
       return;
     }
 
     const hightNode = document.createElement('span');
     hightNode.classList.add(
-      color === 'inherit' ? DELETED_CLASS : HIGHLIGHT_CLASS,
+      color === 'inherit' ? DELETED_CLASS : HIGHTED_CLASS,
     );
     hightNode.style.backgroundColor = color;
     hightNode.style.color = textColor;

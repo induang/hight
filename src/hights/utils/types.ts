@@ -50,3 +50,9 @@ export type HightInfoModel = {
   focus: JQuery<Node>;
   focusOffset: number;
 };
+
+export type ChromeMessage = {
+  action: string;
+  trackCategory: string;
+  trackAction: string;
+};

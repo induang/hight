@@ -9,13 +9,38 @@
     "48": "assets/images/highlighter_48.png",
     "128": "assets/images/highlighter_128.png"
   },
+  "action": {
+    "default_popup": "src/popup/index.html"
+  },
   "content_scripts": [
     {
       "js": [
+        "libs/jquery-3.7.0.min.js",
         "assets/scripts/hight.bundle.js"
       ],
       "matches": [
         "https://developer.chrome.com/docs/extensions/*"
+      ],
+      "css": [
+        "src/hights/hover/index.css"
+      ],
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "scripting",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.png",
+        "images/*.svg",
+        "src/hights/*"
+      ],
+      "matches": [
+        "<all_urls>"
       ]
     }
   ]

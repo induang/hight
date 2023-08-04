@@ -1,9 +1,10 @@
 import { update as updateStorage } from '../storage';
+import { HIGHTED_CLASS } from '../utils/constants';
 import { ColorModel } from '../utils/types';
 
-async function updateColor(hightId: number, color?: ColorModel) {
+async function updateColor(hightId: number, color?: ColorModel): Promise<void> {
   color = color ?? (await cycleColor(hightId));
-  const hights = $(`.hight--highted[data-hight-id='${hightId}']`);
+  const hights = $(`.${HIGHTED_CLASS}[data-hight-id='${hightId}']`);
 
   hights.css('backgroundColor', color.color);
   hights.css('colors', color.textColor || 'inherit');
@@ -19,9 +20,9 @@ async function updateColor(hightId: number, color?: ColorModel) {
 
 function cycleColor(hightId: number): Promise<ColorModel> {
   const hightEl = document.querySelector(
-    `.hight--highted[data-hight-id='${hightId}']`,
+    `.${HIGHTED_CLASS}[data-hight-id='${hightId}']`,
   ) as HTMLElement;
-  const currentColor = hightEl?.style?.backgroundColor;
+  const currentColor = hightEl.style.backgroundColor;
 
   return new Promise((resolve) => {
     chrome.runtime.sendMessage(

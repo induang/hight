@@ -1,6 +1,7 @@
 import { DEFAULT_COLORS } from '../utils/constants';
+import { ColorModel } from '../../utils/hight.type';
 
-function getColorOptions() {
+function getColorOptions(): Promise<Array<ColorModel>> {
   return new Promise((resolve) => {
     chrome.storage.sync.get(
       {

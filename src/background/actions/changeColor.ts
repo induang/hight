@@ -1,6 +1,6 @@
 import { trackEvent } from '../analytics';
 
-function changeColor(colorTitle: string) {
+function changeColor(colorTitle: string): void {
   if (!colorTitle) return;
   trackEvent('color-changed-to', colorTitle);
   chrome.storage.sync.get({ color: colorTitle });

@@ -1,6 +1,16 @@
 export type ColorModel = {
+  title: string;
   color: string;
   textColor: string;
+  name: string;
+  code: string;
+  level: number;
+};
+
+export type ColorOptionModel = {
+  title: string;
+  color: string;
+  textColor?: string;
   name: string;
   code: string;
   level: number;

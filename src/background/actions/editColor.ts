@@ -1,14 +1,19 @@
 import getColorOptions from './getColorOptions';
 
 import { trackEvent } from '../analytics';
+import { ColorOptionModel } from '../../utils/hight.type';
 
-async function editColor(colorTitle: string, color: string, textColor: string) {
+async function editColor(
+  colorTitle: string,
+  color: string,
+  textColor: string,
+): Promise<void> {
   trackEvent('color-edit', colorTitle);
 
-  const colorOptions = await getColorOptions();
+  const colorOptions: Array<ColorOptionModel> = await getColorOptions();
   const colorOption = colorOptions.find(
     (option) => option.title === colorTitle,
-  );
+  )!;
   colorOption.color = color;
   colorOption.textColor = textColor;
 

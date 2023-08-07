@@ -3,7 +3,7 @@ import {
   updateColor as updateHightColor,
   remove as removeHight,
 } from '../core';
-import { ChromeMessage } from '../utils/types';
+import { ChromeMessage } from '../../utils/hight.type';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let hoverToolEl: any;

@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/hights/index.ts'),
+  entry: {
+    contentScript: path.resolve(__dirname, 'src/hights/index.ts'),
+    background: path.resolve(__dirname, 'src/background/index.ts'),
+  },
   output: {
     path: path.resolve(__dirname, 'assets/scripts'),
-    filename: 'hight.bundle.js',
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [{ test: /\.ts$/, use: 'ts-loader' }],

@@ -1,6 +1,6 @@
 import { update as updateStorage } from '../storage';
 import { HIGHTED_CLASS } from '../utils/constants';
-import { ColorModel } from '../utils/types';
+import { ColorModel } from '../../utils/hight.type';
 
 async function updateColor(hightId: number, color?: ColorModel): Promise<void> {
   color = color ?? (await cycleColor(hightId));

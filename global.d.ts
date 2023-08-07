@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /// <reference types="chrome"/>
+/// <reference types="jquery" />
+/// <reference types="node" />
 export {};
 
 interface HightAPI {

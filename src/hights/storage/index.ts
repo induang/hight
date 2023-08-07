@@ -1,6 +1,6 @@
 import { addHightError } from '../errorHandler';
 import { hight } from '../core';
-import { HightModel, SelectionSimplifiedModel } from '../utils/types';
+import { HightModel, SelectionSimplifiedModel } from '../../utils/hight.type';
 
 // maybe need write in manifest.json
 const STORE_FORMAT_VERSION = chrome.runtime.getManifest().version;

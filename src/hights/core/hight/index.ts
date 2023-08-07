@@ -1,4 +1,4 @@
-import { SelectionSimplifiedModel } from '../../utils/types';
+import { SelectionSimplifiedModel } from '../../../utils/hight.type';
 import hightV1 from './hightV1';
 
 export default function hight(

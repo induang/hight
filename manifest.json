@@ -16,7 +16,7 @@
     {
       "js": [
         "libs/jquery-3.7.0.min.js",
-        "assets/scripts/hight.bundle.js"
+        "assets/scripts/contentScript.bundle.js"
       ],
       "matches": [
         "https://developer.chrome.com/docs/extensions/*"
@@ -27,6 +27,9 @@
       "all_frames": true
     }
   ],
+  "background": {
+    "service_worker": "assets/scripts/background.bundle.js"
+  },
   "permissions": [
     "contextMenus",
     "scripting",

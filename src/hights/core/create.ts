@@ -1,6 +1,6 @@
 import hight from './hight';
 import { store } from '../storage';
-import { ColorModel, SelectionSimplifiedModel } from '../utils/types';
+import { ColorModel, SelectionSimplifiedModel } from '../../utils/hight.type';
 
 async function createHightBlock(
   color: ColorModel,

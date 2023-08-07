@@ -1,5 +1,5 @@
 import { load } from '../storage';
-import { HightModel, HightErrorModel } from '../utils/types';
+import { HightModel, HightErrorModel } from '../../utils/hight.type';
 
 const MAX_RETRY_TIME = 10000;
 const RETRY_INTERVAL = 500;

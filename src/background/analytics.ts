@@ -21,7 +21,7 @@ async function sessionId() {
   let { sessionData } = await chrome.storage.session.get('sessionData');
   const currentTimeInMs = Date.now();
 
-  if (sessionData && sessionData.timestamp) {
+  if (sessionData?.timestamp) {
     const durationInMin = (currentTimeInMs - sessionData.timestamp) / 60000;
     if (durationInMin > SESSION_EXPIRATION_IN_MIN) {
       sessionData = null;
@@ -44,8 +44,8 @@ async function sessionId() {
 async function trackEvent(
   name: string,
   action: unknown,
-  label = null,
-  value = null,
+  label = {},
+  value = {},
   extraParams: { session_id?: string; engagement_time_msec?: number } = {},
 ) {
   if (!extraParams.session_id) {

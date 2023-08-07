@@ -75,16 +75,10 @@ function initializeContextMenus() {
 
 function initializeContextMenuEventListeners() {
   chrome.contextMenus.onClicked.addListener(
-    ({
-      menuItemId,
-      parentMenuItemId,
-    }: {
-      menuItemId: string;
-      parentMenuItemId: string;
-    }) => {
+    ({ menuItemId, parentMenuItemId }) => {
       if (parentMenuItemId === 'hight-color') {
         trackEvent('color-change-source', 'context-menu');
-        changeColor(menuItemId);
+        changeColor(String(menuItemId));
         return;
       }
 
@@ -104,12 +98,12 @@ function initializeExtensionEventListeners() {
       'extension',
       'installed',
       chrome.runtime.getManifest().version,
-      null,
-      { ni: 1 },
+      undefined,
+      {},
     );
   });
   chrome.runtime.onStartup.addListener(() => {
-    trackEvent('extension', 'startup', null, null, { ni: 1 });
+    trackEvent('extension', 'startup', undefined, undefined, {});
   });
 }
 

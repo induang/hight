@@ -1,6 +1,9 @@
 import { initializeHightEventListener } from '../../hover';
 import { DELETED_CLASS, HIGHTED_CLASS } from '../../utils/constants';
-import { HightInfoModel, SelectionSimplifiedModel } from '../../utils/types';
+import {
+  HightInfoModel,
+  SelectionSimplifiedModel,
+} from '../../../utils/hight.type';
 
 export default function hightV1(
   selectionString: string,
@@ -11,13 +14,13 @@ export default function hightV1(
   hightIndex: number,
 ): boolean {
   const hightInfo: HightInfoModel = {
-    color: color ? color : 'yellow',
-    textColor: textColor ? textColor : 'inherit',
+    color: color || 'yellow',
+    textColor: textColor || 'inherit',
     hightIndex,
     selectionString,
-    anchor: $(selection.anchorNode!),
+    anchor: $(selection.anchorNode),
     anchorOffset: selection.anchorOffset,
-    focus: $(selection.focusNode!),
+    focus: $(selection.focusNode),
     focusOffset: selection.focusOffset,
   };
 

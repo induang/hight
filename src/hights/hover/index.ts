@@ -6,7 +6,7 @@ import {
 import { ChromeMessage } from '../../utils/hight.type';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let hoverToolEl: any;
+let hoverToolEl: JQuery<Node>;
 let hoverToolTimeout: NodeJS.Timeout | null;
 let currentHightEl: Element;
 let hightClicked: boolean;
@@ -112,7 +112,7 @@ function onChangeColorBTNClicked(): void {
 function onHoverToolMouseEnter() {
   if (hoverToolTimeout !== null) {
     clearTimeout(hoverToolTimeout);
-    hoverToolEl = null;
+    hoverToolTimeout = null;
   }
 }
 
@@ -138,7 +138,7 @@ function removeHightEventListeners(hightElement: Node) {
 }
 
 function getHoverToolEl() {
-  if (!hoverToolEl.isConnected) {
+  if (!hoverToolEl.closest('document').length) {
     hoverToolEl.appendTo('body');
   }
   return hoverToolEl;

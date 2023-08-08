@@ -19,28 +19,55 @@
         "assets/scripts/contentScript.bundle.js"
       ],
       "matches": [
-        "https://developer.chrome.com/docs/extensions/*"
-      ],
-      "css": [
-        "src/hights/hover/index.css"
+        "<all_urls>"
       ],
       "all_frames": true
     }
   ],
   "background": {
-    "service_worker": "assets/scripts/background.bundle.js"
+    "service_worker": "assets/scripts/background.bundle.js",
+    "type": "module"
   },
   "permissions": [
     "contextMenus",
     "scripting",
     "storage"
   ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "execute-highlight": {
+      "suggested_key": {
+        "default": "Alt+H",
+        "mac": "MacCtrl+H"
+      },
+      "description": "Highlight selected text"
+    },
+    "toggle-highlighter-cursor": {
+      "description": "Toggle the highlighter cursor"
+    },
+    "change-color-to-yellow": {
+      "description": "Change highlighter color to yellow"
+    },
+    "change-color-to-cyan": {
+      "description": "Change highlighter color to blue"
+    },
+    "change-color-to-lime": {
+      "description": "Change highlighter color to green"
+    },
+    "change-color-to-magenta": {
+      "description": "Change highlighter color to pink"
+    },
+    "change-color-to-dark": {
+      "description": "Change highlighter color to dark"
+    }
+  },
   "web_accessible_resources": [
     {
       "resources": [
-        "images/*.png",
-        "images/*.svg",
-        "src/hights/*"
+        "src/hights/*",
+        "assets/scripts/contentScript.bundle.js"
       ],
       "matches": [
         "<all_urls>"

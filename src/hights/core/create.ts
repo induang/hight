@@ -24,7 +24,6 @@ async function createHightBlock(
     color.color,
     color.textColor,
   );
-
   const selectionSimplified: SelectionSimplifiedModel = {
     anchorNode: selection.anchorNode!,
     anchorOffset: selection.anchorOffset,
@@ -39,6 +38,7 @@ async function createHightBlock(
     color.color,
     color.textColor,
     hightBlockIndex,
+    '1',
   );
 }
 

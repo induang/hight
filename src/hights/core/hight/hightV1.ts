@@ -13,6 +13,7 @@ export default function hightV1(
   textColor: string,
   hightIndex: number,
 ): boolean {
+  console.log('✨✨ hight:', new Date().toISOString(), '✨✨');
   const hightInfo: HightInfoModel = {
     color: color || 'yellow',
     textColor: textColor || 'inherit',
@@ -31,8 +32,9 @@ export default function hightV1(
   }
 
   // STEP 3
-  // absent
+  if (selection?.removeAllRanges) selection.removeAllRanges();
 
+  // STEP 4
   const parent = $(container).parent();
   parent.find(`.${HIGHTED_CLASS}`).each((_i, el) => {
     initializeHightEventListener(el);
@@ -83,22 +85,20 @@ function _recursiveWrapper(
       return;
     }
 
-    const elementElement = element as Element;
     let startIndex = 0;
     if (!startFound) {
-      if (!anchor.is(elementElement) && !focus.is(elementElement)) return;
+      if (!anchor.is(element as Element) && !focus.is(element as Element))
+        return;
 
       startFound = 1;
       startIndex = Math.min(
         ...[
-          ...(anchor.is(elementElement) ? [anchorOffset] : []),
-          ...(anchor.is(elementElement) ? [focusOffset] : []),
+          ...(anchor.is(element as Element) ? [anchorOffset] : []),
+          ...(anchor.is(element as Element) ? [focusOffset] : []),
         ],
       );
     }
-
-    const textElement = element as Text;
-    const { nodeValue, parentElement: parent } = textElement;
+    const { nodeValue, parentElement: parent } = element;
 
     if (nodeValue && startIndex > nodeValue?.length) {
       throw new Error(
@@ -106,7 +106,7 @@ function _recursiveWrapper(
       );
     }
 
-    const hightTextEl = textElement.splitText(startIndex);
+    const hightTextEl = (element as Text).splitText(startIndex);
 
     let i = startIndex;
     for (; nodeValue && i < nodeValue?.length; i++) {
@@ -128,13 +128,15 @@ function _recursiveWrapper(
       }
     }
 
-    if (parent?.classList.contains(HIGHTED_CLASS)) return;
+    if (parent?.classList.contains(HIGHTED_CLASS)) {
+      return;
+    }
 
     const elementCharCount = i - startIndex;
     const insertBeforeElement = hightTextEl.splitText(elementCharCount);
     const hightText = hightTextEl.nodeValue;
 
-    if (hightText?.match(/\s*$/u)) {
+    if (hightText?.match(/^\s*$/u)) {
       parent?.normalize();
       return;
     }

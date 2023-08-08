@@ -15,11 +15,8 @@ let changeColorBtnEl = null;
 let deleteBTNEl = null;
 
 function initializeHoverTools() {
-  console.log('initial');
   $.get(chrome.runtime.getURL('src/hights/hover/index.html'), (data) => {
-    console.log(data);
     hoverToolEl = $(data);
-    console.log('hoverTool: ', hoverToolEl);
     // hoverToolEl.hide();
     hoverToolEl[0].addEventListener('mouseenter', onHoverToolMouseEnter);
     hoverToolEl[0].addEventListener('mouseleave', onHoverToolMouseLeave);

@@ -44,7 +44,8 @@ export type HightErrorModel = {
 };
 
 export type SelectionSimplifiedModel = {
-  anchorNode: Node;
+  removeAllRanges?: () => void;
+  anchorNode: Node | Text | Element | Document;
   anchorOffset: number;
   focusNode: Node;
   focusOffset: number;

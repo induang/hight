@@ -2,6 +2,7 @@
 /// <reference types="chrome"/>
 /// <reference types="jquery" />
 /// <reference types="node" />
+
 export {};
 
 interface HightAPI {
@@ -22,6 +23,12 @@ interface HightOperationAPI {
 
 declare global {
   interface Window {
+    highterAPI: {
+      hight: HightAPI;
+      hights: HightOperationAPI;
+    };
+  }
+  interface globalThis {
     highterAPI: {
       hight: HightAPI;
       hights: HightOperationAPI;

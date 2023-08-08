@@ -36,8 +36,9 @@ async function executeInTab(
     target: { tabId, allFrames: true },
     ...(file && { files: [file] }),
     func,
-    ...(args && args),
+    args,
   });
+  console.log('come here?');
 
   if (executions.length === 1) {
     return executions[0].result;

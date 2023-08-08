@@ -18,6 +18,9 @@
         "libs/jquery-3.7.0.min.js",
         "assets/scripts/contentScript.bundle.js"
       ],
+      "css": [
+        "src/hights/hover/index.css"
+      ],
       "matches": [
         "<all_urls>"
       ],
@@ -67,7 +70,8 @@
     {
       "resources": [
         "src/hights/*",
-        "assets/scripts/contentScript.bundle.js"
+        "assets/scripts/contentScript.bundle.js",
+        "assets/images/*"
       ],
       "matches": [
         "<all_urls>"

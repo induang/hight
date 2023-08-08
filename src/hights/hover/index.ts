@@ -7,7 +7,7 @@ import { ChromeMessage } from '../../utils/hight.type';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let hoverToolEl: any;
-let hoverToolTimeout: NodeJS.Timeout;
+let hoverToolTimeout: NodeJS.Timeout | null;
 let currentHightEl: Element;
 let hightClicked: boolean;
 let copyBTNEl = null;
@@ -17,7 +17,7 @@ let deleteBTNEl = null;
 function initializeHoverTools() {
   $.get(chrome.runtime.getURL('src/hights/hover/index.html'), (data) => {
     hoverToolEl = $(data);
-    // hoverToolEl.hide();
+    hoverToolEl.hide();
     hoverToolEl[0].addEventListener('mouseenter', onHoverToolMouseEnter);
     hoverToolEl[0].addEventListener('mouseleave', onHoverToolMouseLeave);
 
@@ -32,8 +32,8 @@ function initializeHoverTools() {
     window.addEventListener('click', (e: MouseEvent) => {
       const target = e.target as Element;
       if (target?.classList?.contains(HIGHTED_CLASS)) return;
-      // if (target?.classList.contains('hight-colorChanger-button')) return;
-      // hide();
+      if (target?.classList.contains('hight-colorChanger-button')) return;
+      hide();
     });
 
     window.addEventListener('scroll', () => {
@@ -54,7 +54,7 @@ function moveToolbarToHight(hightEl: Element, position?: number) {
   if (position !== undefined) {
     let hoverLeft = null;
     if (boundingRect.width < toolWidth) {
-      hoverLeft = boundingRect.left < boundingRect.width / 2 - toolWidth / 2;
+      hoverLeft = boundingRect.left + boundingRect.width / 2 - toolWidth / 2;
     } else if (position - boundingRect.left < toolWidth / 2) {
       hoverLeft = boundingRect.left;
     } else if (boundingRect.right - position < toolWidth / 2) {
@@ -65,6 +65,7 @@ function moveToolbarToHight(hightEl: Element, position?: number) {
 
     getHoverToolEl()?.css({ left: hoverLeft });
   }
+  getHoverToolEl().show();
 }
 
 function onCopyBTNClicked(): void {
@@ -88,7 +89,7 @@ function onDeleteBTNClicked(): void {
   removeHight(hightId);
 
   getHoverToolEl()?.hide();
-  clearTimeout(hoverToolTimeout);
+  hoverToolTimeout = null;
   chrome.runtime.sendMessage({
     action: 'track-event',
     trackCategory: 'hight-action',
@@ -111,7 +112,7 @@ function onChangeColorBTNClicked(): void {
 function onHoverToolMouseEnter() {
   if (hoverToolTimeout !== null) {
     clearTimeout(hoverToolTimeout);
-    clearTimeout(hoverToolTimeout);
+    hoverToolEl = null;
   }
 }
 
@@ -120,7 +121,7 @@ function onHoverToolMouseLeave() {}
 function hide() {
   $('.hight-hovered').removeClass('hight-hovered');
   getHoverToolEl()?.hide();
-  clearTimeout(hoverToolTimeout);
+  hoverToolTimeout = null;
   hightClicked = false;
 }
 
@@ -145,20 +146,25 @@ function getHoverToolEl() {
 
 function onHightMouseEnterOrClick(e: Event) {
   const newHightEl = e.target as Element;
-  const newHightId = newHightEl?.getAttribute('data-hight-id');
+  const newHightId = newHightEl.getAttribute('data-hight-id');
 
-  if (hightClicked && e.type !== 'click') return;
+  if (hightClicked && e.type !== 'click') {
+    return;
+  }
 
   hightClicked = e.type === 'click';
 
   if (hoverToolTimeout !== null) {
     clearTimeout(hoverToolTimeout);
-
-    if (newHightId === currentHightEl.getAttribute('data-hight-id')) return;
+    hoverToolTimeout = null;
+    if (
+      currentHightEl &&
+      newHightId === currentHightEl?.getAttribute('data-hight-id')
+    ) {
+      return;
+    }
   }
-
   currentHightEl = newHightEl;
-
   moveToolbarToHight(newHightEl, (e as MouseEvent).clientX);
 
   $('.hight-hovered').removeClass('hight-hovered');

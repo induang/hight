@@ -37,6 +37,7 @@ export default function hightV1(
   // STEP 4
   const parent = $(container).parent();
   parent.find(`.${HIGHTED_CLASS}`).each((_i, el) => {
+    console.log('element tached:', el);
     initializeHightEventListener(el);
   });
 

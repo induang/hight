@@ -9,13 +9,11 @@ async function createHightBlock(
   const selectionString = selection?.toString();
   if (!selectionString) return;
   let container = selection?.getRangeAt(0).commonAncestorContainer;
-  if (container !== undefined) {
-    while (container && !('innerHTML' in container)) {
-      if (container.parentNode) {
-        container = container.parentNode;
-      }
-    }
+
+  while (container && !('innerHTML' in container) && container.parentNode) {
+    container = container.parentNode;
   }
+
   const hightBlockIndex = await store(
     selection,
     container,
@@ -38,7 +36,6 @@ async function createHightBlock(
     color.color,
     color.textColor,
     hightBlockIndex,
-    '1',
   );
 }
 

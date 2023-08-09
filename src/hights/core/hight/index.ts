@@ -10,7 +10,7 @@ export default function hight(
   hightIndex: number,
   version?: string,
 ): boolean {
-  if (version === '1') {
+  if (version === '1.0' || version === undefined) {
     return hightV1(
       selectionString,
       container,

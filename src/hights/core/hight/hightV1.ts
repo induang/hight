@@ -34,10 +34,9 @@ export default function hightV1(
   // STEP 3
   if (selection?.removeAllRanges) selection.removeAllRanges();
 
-  // STEP 4
+  // STEP 4 add event listener
   const parent = $(container).parent();
   parent.find(`.${HIGHTED_CLASS}`).each((_i, el) => {
-    console.log('element tached:', el);
     initializeHightEventListener(el);
   });
 

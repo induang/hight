@@ -1,7 +1,7 @@
 import { load } from '../storage';
 import { HightModel, HightErrorModel } from '../../utils/hight.type';
 
-const MAX_RETRY_TIME = 10000;
+const MAX_RETRY_TIME = 1000;
 const RETRY_INTERVAL = 500;
 
 const lostHights = new Map<number, HightErrorModel>();

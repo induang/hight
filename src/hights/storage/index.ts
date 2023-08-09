@@ -8,7 +8,6 @@ let alternativeUrlIndexOffset = 0;
 
 async function store(
   selection: Selection,
-  // TODO container type validate
   container: Node,
   url: string,
   href: string,
@@ -20,7 +19,7 @@ async function store(
   if (!yu_hight[url]) yu_hight[url] = [];
 
   const index = yu_hight[url].push({
-    version: STORE_FORMAT_VERSION,
+    version: STORE_FORMAT_VERSION || '1.0',
     string: selection.toString(),
     container: getQuery(container),
     anchorNode: getQuery(selection.anchorNode!),
@@ -36,7 +35,6 @@ async function store(
   } as HightModel);
 
   chrome.storage.local.set({ yu_hight });
-
   return index - 1 + alternativeUrlIndexOffset;
 }
 
@@ -69,8 +67,8 @@ async function update(
   }
 }
 
-function elementFromQuery(storedQuery: string): Node | undefined {
-  const re = />textNode:nth-of-type\((\d+)\)$/iu;
+function elementFromQuery(storedQuery: string): Node | null {
+  const re = />textNode:nth-of-type\(([0-9]+)\)$/iu;
   const result = re.exec(storedQuery);
 
   if (result) {
@@ -78,9 +76,30 @@ function elementFromQuery(storedQuery: string): Node | undefined {
     storedQuery = storedQuery.replace(re, '');
     const parent = robustQuerySelector(storedQuery);
 
-    if (!parent) return undefined;
+    if (!parent) return null;
 
     return parent.childNodes[textNodeIndex];
+  }
+  return robustQuerySelector(storedQuery);
+}
+
+function robustQuerySelector(query: string): Node | null {
+  try {
+    return document.querySelector(query);
+  } catch (error) {
+    let element: Node = document;
+    for (const queryPart of query.split('>')) {
+      if (!element) return null;
+
+      const re = /^(.*):nth-of-type\(([0-9]+)\)$/iu;
+      const result = re.exec(queryPart);
+
+      const [, tagName, index] = result ?? [undefined, queryPart, 1];
+      element = Array.from(element.childNodes).filter(
+        (child) => 'localName' in child && child.localName === tagName,
+      )[Number(index) - 1];
+    }
+    return element;
   }
 }
 
@@ -167,28 +186,9 @@ async function clearPage(url: string, alternativeUrl?: string): Promise<void> {
   chrome.storage.local.set({ yu_hight });
 }
 
-function robustQuerySelector(query: string): Node | null {
-  try {
-    return document.querySelector(query);
-  } catch (error) {
-    let element: Node = document;
-    for (const queryPart of query.split('>')) {
-      if (!element) return null;
-
-      const re = /^(.*):nth-of-type\((\d+)\)$/iu;
-      const result = re.exec(queryPart);
-
-      const [, tagName, index] = result ?? [undefined, queryPart, 1];
-      element = Array.from(element.childNodes).filter(
-        (child) => 'localName' in child && child.localName === tagName,
-      )[Number(index) - 1];
-    }
-    return element;
-  }
-}
-
-function getQuery(element: Element | Node): string {
-  if ('id' in element && element.id) return `#${escapeCSString(element.id)}`;
+function getQuery(element: Node): string {
+  if ('id' in element && element.id)
+    return `#${escapeCSString(element.id as string)}`;
   if ('localName' in element && element.localName === 'html') return 'html';
 
   const parent = element.parentNode!;
@@ -196,19 +196,22 @@ function getQuery(element: Element | Node): string {
   const parentSelector = getQuery(parent);
 
   // Text Node
-  if (!('localName' in element) || element.localName === undefined) {
+  if (!('localName' in element)) {
     const index = Array.prototype.indexOf.call(parent.childNodes, element);
     return `${parentSelector}>textNode:nth-of-type(${index})`;
+    // return `${parentSelector}`;
   } else {
     const index =
       Array.from(parent.childNodes)
-        .filter((child) => (child as Element).localName === element.localName)
-        .indexOf(element) + 1;
+        .filter(
+          (child) =>
+            'localName' in child && child.localName === element.localName,
+        )
+        .indexOf(element as unknown as ChildNode) + 1;
     return `${parentSelector}>${element.localName}:nth-of-type(${index})`;
   }
 }
 
-// QU: 为什么这样置换
 function escapeCSString(cssString: string): string {
   return cssString.replace(/(:)/gu, '\\$1');
 }

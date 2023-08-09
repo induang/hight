@@ -1,5 +1,7 @@
+import { HIGHTED_CLASS } from '../utils/constants';
+
 function getAllFound() {
-  const hights = document.querySelectorAll('hight--highted');
+  const hights = document.querySelectorAll(HIGHTED_CLASS);
   if (!hights) return null;
   else {
     return Array.from(hights)

@@ -10,11 +10,15 @@ module.exports = {
     filename: '[name].bundle.js',
   },
   module: {
-    rules: [{ test: /\.ts$/, use: 'ts-loader' }],
+    rules: [
+      { test: /\.ts$/, use: 'ts-loader' },
+      { test: /\.tsx$/, use: 'ts-loader' },
+      { test: /\.css$/, use: 'css-loader' },
+    ],
   },
   watch: true,
   mode: 'production',
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.tsx'],
   },
 };

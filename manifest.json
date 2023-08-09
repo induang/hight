@@ -9,9 +9,6 @@
     "48": "assets/images/highlighter_48.png",
     "128": "assets/images/highlighter_128.png"
   },
-  "action": {
-    "default_popup": "src/popup/index.html"
-  },
   "content_scripts": [
     {
       "js": [
@@ -32,10 +29,14 @@
     "service_worker": "assets/scripts/background.bundle.js",
     "type": "module"
   },
+  "side_panel": {
+    "default_path": "src/sidePanel/index.html"
+  },
   "permissions": [
     "contextMenus",
     "scripting",
-    "storage"
+    "storage",
+    "sidePanel"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -72,7 +73,8 @@
       "resources": [
         "src/hights/*",
         "assets/scripts/contentScript.bundle.js",
-        "assets/images/*"
+        "assets/images/*",
+        "src/sidePanel/*"
       ],
       "matches": [
         "<all_urls>"

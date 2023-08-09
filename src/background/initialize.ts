@@ -11,7 +11,6 @@ import {
   removeHights,
   showHight,
 } from './actions';
-import { trackEvent } from './analytics';
 import { wrapResponse } from './utils';
 
 function initialize() {
@@ -78,14 +77,12 @@ function initializeContextMenuEventListeners() {
   chrome.contextMenus.onClicked.addListener(
     ({ menuItemId, parentMenuItemId }) => {
       if (parentMenuItemId === 'hight-color') {
-        trackEvent('color-change-source', 'context-menu');
         changeColor(String(menuItemId));
         return;
       }
 
       switch (menuItemId) {
         case 'hight':
-          trackEvent('hight-source', 'context-menu');
           hightText();
           break;
       }
@@ -94,18 +91,8 @@ function initializeContextMenuEventListeners() {
 }
 
 function initializeExtensionEventListeners() {
-  chrome.runtime.onInstalled.addListener(() => {
-    trackEvent(
-      'extension',
-      'installed',
-      chrome.runtime.getManifest().version,
-      undefined,
-      {},
-    );
-  });
-  chrome.runtime.onStartup.addListener(() => {
-    trackEvent('extension', 'startup', undefined, undefined, {});
-  });
+  chrome.runtime.onInstalled.addListener(() => {});
+  chrome.runtime.onStartup.addListener(() => {});
 }
 
 function initializeTabEventListeners() {
@@ -120,27 +107,21 @@ function initializeKeyboardShortcutEventListeners() {
   chrome.commands.onCommand.addListener((command) => {
     switch (command) {
       case 'execute-hight':
-        trackEvent('hight-source', 'keyboard-shortcut');
         hightText();
         break;
       case 'change-color-to-yellow':
-        trackEvent('color-change-source', 'keyboard-shortcut');
         changeColor('yellow');
         break;
       case 'change-color-to-cyan':
-        trackEvent('color-change-source', 'keyboard-shortcut');
         changeColor('cyan');
         break;
       case 'change-color-to-lime':
-        trackEvent('color-change-source', 'keyboard-shortcut');
         changeColor('lime');
         break;
       case 'change-color-to-magenta':
-        trackEvent('color-change-source', 'keyboard-shortcut');
         changeColor('magenta');
         break;
       case 'change-color-to-dark':
-        trackEvent('color-change-source', 'keyboard-shortcut');
         changeColor('dark');
         break;
     }
@@ -151,11 +132,9 @@ function initializeMessageEventListeners() {
     if (!request.action) return;
     switch (request.action) {
       case 'hight':
-        trackEvent('hight-source', 'hight-cursor');
         hightText();
         return;
       case 'track-event':
-        trackEvent(request.trackCategory, request.trackAction);
         return;
       case 'remove-hights':
         removeHights();
@@ -164,7 +143,6 @@ function initializeMessageEventListeners() {
         removeHight(request.hightId);
         return;
       case 'change-color':
-        trackEvent('color-change-source', request.source);
         changeColor(request.color);
         return;
       case 'edit-color':

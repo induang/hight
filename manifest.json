@@ -73,6 +73,8 @@
         "src/hights/*",
         "assets/scripts/contentScript.bundle.js",
         "assets/images/*",
+        "assets/scripts/*",
+        "assets/styles/*",
         "src/sidePanel/*"
       ],
       "matches": [

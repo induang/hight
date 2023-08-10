@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack",
+    "start": "webpack && npx tailwindcss -i ./src/sidePanel/index.css -o ./assets/styles/output.css --watch",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,md}'"
   },
@@ -26,12 +26,14 @@
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "css-loader": "^6.8.1",
+    "daisyui": "^3.5.1",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.0",
     "husky": "^4.3.8",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
+    "tailwindcss": "^3.3.3",
     "ts-loader": "^9.4.4",
     "typescript": "^5.1.6",
     "webpack": "^5.88.2",

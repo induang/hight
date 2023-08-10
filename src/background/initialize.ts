@@ -10,6 +10,7 @@ import {
   removeHight,
   removeHights,
   showHight,
+  toggleHighterCursor,
 } from './actions';
 import { wrapResponse } from './utils';
 
@@ -85,6 +86,8 @@ function initializeContextMenuEventListeners() {
         case 'hight':
           hightText();
           break;
+        case 'toggle-cursor':
+          toggleHighterCursor();
       }
     },
   );
@@ -108,6 +111,9 @@ function initializeKeyboardShortcutEventListeners() {
     switch (command) {
       case 'execute-hight':
         hightText();
+        break;
+      case 'toggle-highter-cursor':
+        toggleHighterCursor();
         break;
       case 'change-color-to-yellow':
         changeColor('yellow');
@@ -148,6 +154,8 @@ function initializeMessageEventListeners() {
       case 'edit-color':
         editColor(request.colorTitle, request.color, request.textColor);
         return;
+      case 'toggle-highter-cursor':
+        toggleHighterCursor();
       case 'get-hights':
         wrapResponse(getHights(), sendResponse);
         return true;

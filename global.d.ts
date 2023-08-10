@@ -26,12 +26,18 @@ declare global {
     highterAPI: {
       hight: HightAPI;
       hights: HightOperationAPI;
+      highterCursor: {
+        toogle: Function;
+      };
     };
   }
   interface globalThis {
     highterAPI: {
       hight: HightAPI;
       hights: HightOperationAPI;
+      highterCursor: {
+        toogle: Function;
+      };
     };
   }
 }

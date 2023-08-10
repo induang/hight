@@ -4,6 +4,7 @@ import { DELETED_CLASS, HIGHTED_CLASS } from '../utils/constants';
 
 function remove(hightId: number) {
   const hights = $(`.${HIGHTED_CLASS}[data-hight-id='${hightId}']`);
+  console.log('delete hights:', hights);
   $('.hight-hovered').removeClass('hight-hovered');
 
   hights.css('backgroundColor', 'inherit');

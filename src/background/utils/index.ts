@@ -38,8 +38,6 @@ async function executeInTab(
     func,
     args,
   });
-  console.log('come here?');
-
   if (executions.length === 1) {
     return executions[0].result;
   }

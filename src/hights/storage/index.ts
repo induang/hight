@@ -112,7 +112,6 @@ async function loadAll(url: string, alternativeUrl?: string): Promise<void> {
   }
   alternativeUrlIndexOffset = yu_hight.length;
   yu_hight = yu_hight.concat(result.yu_hight[url] || []);
-
   if (!yu_hight) return;
   for (let i = 0; i < yu_hight.length; i++) {
     load(yu_hight[i], i);

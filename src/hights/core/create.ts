@@ -38,7 +38,7 @@ async function createHightBlock(
     hightBlockIndex,
   );
 
-  chrome.runtime.sendMessage({ action: 'hight-done' });
+  chrome.runtime.sendMessage({ action: 'hight-change' });
 }
 
 export default createHightBlock;

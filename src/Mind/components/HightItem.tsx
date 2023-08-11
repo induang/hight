@@ -6,7 +6,6 @@ interface HightItemProps {
 
 export default function HightItem({ hight }: HightItemProps) {
   const handleScrollIntoViewClick = () => {
-    console.log('click');
     chrome.runtime.sendMessage({
       action: 'show-hight',
       hightId: hight.hightIndex,

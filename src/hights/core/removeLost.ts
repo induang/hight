@@ -8,6 +8,8 @@ function removeLost(hightId: number) {
     window.location.hostname + window.location.pathname,
     window.location.pathname,
   );
+
+  chrome.runtime.sendMessage({ action: 'hight-change' });
 }
 
 export default removeLost;

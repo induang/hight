@@ -25,6 +25,8 @@ function remove(hightId: number) {
   hights.each((_, el) => {
     removeHightEventListeners(el);
   });
+
+  chrome.runtime.sendMessage({ action: 'hight-change' });
 }
 
 export default remove;

@@ -16,6 +16,8 @@ async function updateColor(hightId: number, color?: ColorModel): Promise<void> {
     color.color,
     color.textColor,
   );
+
+  chrome.runtime.sendMessage({ action: 'hight-change' });
 }
 
 function cycleColor(hightId: number): Promise<ColorModel> {

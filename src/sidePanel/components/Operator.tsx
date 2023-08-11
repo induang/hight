@@ -1,27 +1,30 @@
-import { useState } from 'react';
-import { ChromeMessage } from '../../utils/hight.type';
+import { useContext, useState } from 'react';
+import HightContext from '../contexts/HightContext';
 
 export default function Operator() {
   const [isCursorToggleChecked, setIsCursorToggleChecked] = useState(false);
+  const { hights, setHights } = useContext(HightContext);
 
-  const handleToggleClick = () => {
-    setIsCursorToggleChecked(!isCursorToggleChecked);
-    chrome.runtime.sendMessage({
+  const handleToggleClick = async () => {
+    await chrome.runtime.sendMessage({
       action: 'toggle-highter-cursor',
-      source: 'popup',
     });
+    setIsCursorToggleChecked(!isCursorToggleChecked);
   };
 
-  const handleDeleteAllClick = () => {
-    chrome.runtime.sendMessage({ action: 'remove-hights' });
+  const handleDeleteAllClick = async () => {
+    await chrome.runtime.sendMessage({ action: 'remove-hights' });
+    setHights([]);
   };
 
   const handleCopyAllClick = () => {
-    chrome.runtime.sendMessage({
-      action: 'track-event',
-      trackCategory: 'hight-action',
-      trackAction: 'copy-all',
-    } as ChromeMessage);
+    const text = hights?.reduce(
+      (pre, hight) => pre + hight.hightText + '\n',
+      '',
+    );
+    if (text) {
+      window.navigator.clipboard.writeText(text);
+    }
   };
 
   return (

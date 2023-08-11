@@ -37,6 +37,8 @@ async function createHightBlock(
     color.textColor,
     hightBlockIndex,
   );
+
+  chrome.runtime.sendMessage({ action: 'hight-done' });
 }
 
 export default createHightBlock;

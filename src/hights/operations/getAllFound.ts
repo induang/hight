@@ -1,6 +1,6 @@
 import { HIGHTED_CLASS } from '../utils/constants';
 
-function getAllFound() {
+function getAllFound(): Map<string, string> | null {
   const hights = document.getElementsByClassName(HIGHTED_CLASS);
   if (!hights) return null;
   else {

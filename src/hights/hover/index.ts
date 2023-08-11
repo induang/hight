@@ -145,6 +145,7 @@ function getHoverToolEl() {
 }
 
 function onHightMouseEnterOrClick(e: Event) {
+  console.log(e);
   const newHightEl = e.target as Element;
   const newHightId = newHightEl.getAttribute('data-hight-id');
 

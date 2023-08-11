@@ -3,7 +3,12 @@ import { executeInCurrentTab } from '../utils';
 function getHights() {
   function contentScriptGetHights() {
     const hightsMap = window.highterAPI.hights.getAllFound();
-    return Array.from(hightsMap);
+    if (hightsMap) {
+      return Array.from(hightsMap, ([key, value]) => ({
+        hightIndex: key,
+        hightText: value,
+      }));
+    } else return null;
   }
 
   return executeInCurrentTab({ func: contentScriptGetHights });

@@ -34,7 +34,7 @@ export type HightModel = {
   href: string;
   uuid: string;
   createdAt: number;
-  isDeleted: boolean;
+  level: number;
 };
 
 export type HightErrorModel = {
@@ -61,6 +61,7 @@ export type HightInfoModel = {
   anchorOffset: number;
   focus: JQuery<Node>;
   focusOffset: number;
+  hightLevel: number;
 };
 
 export type ChromeMessage = {

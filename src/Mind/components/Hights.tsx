@@ -8,20 +8,14 @@ export default function Higths() {
   const { hights, setHights } = useContext(HightContext);
 
   useEffect(() => {
-    console.log('run');
     getFromBackgroundPage({ action: 'get-hights' }, false).then((hights) => {
-      console.log('hights:', hights);
       setHights(hights as Array<HightItemModel>);
     });
   }, []);
 
   useEffect(() => {
     console.log('always run ');
-    const messageListener = (
-      request: any,
-      sender: chrome.runtime.MessageSender,
-      sendResponse: (response?: any) => void,
-    ) => {
+    const messageListener = (request: any) => {
       if (request.action === 'hight-change') {
         getFromBackgroundPage({ action: 'get-hights' }, false).then(
           (hights) => {

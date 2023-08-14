@@ -30,7 +30,7 @@ async function store(
     href,
     uuid: crypto.randomUUID(),
     createdAt: Date.now(),
-    isDeleted: false,
+    level: 1,
   } as HightModel);
 
   await chrome.storage.local.set({ yu_hight });
@@ -52,8 +52,20 @@ async function update(
       hightforUpdate.color = newColor;
       hightforUpdate.textColor = newTextColor;
       hightforUpdate.updatedAt = Date.now();
-      if (newColor === 'inherit' && newTextColor === 'inherit')
-        hightforUpdate.isDeleted = true;
+      await chrome.storage.local.set({ yu_hight });
+    }
+  }
+}
+
+async function updateLevel(hightIndex: number, url: string, newLevel: number) {
+  const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
+
+  const hightsOfUrl = yu_hight[url];
+  if (hightsOfUrl) {
+    const hightforUpdate = hightsOfUrl[hightIndex];
+    if (hightforUpdate) {
+      hightforUpdate.level = newLevel;
+      hightforUpdate.updatedAt = Date.now();
       await chrome.storage.local.set({ yu_hight });
     }
   }
@@ -71,7 +83,7 @@ function load(
     focusOffset: hightVal.focusOffset,
   };
 
-  const { color, string: selectionString, textColor, version } = hightVal;
+  const { color, string: selectionString, textColor, level } = hightVal;
   const container = elementFromQuery(hightVal.container);
 
   if (!selection.anchorNode || !selection.focusNode || !container) {
@@ -88,7 +100,7 @@ function load(
     color,
     textColor,
     hightIndex,
-    version,
+    level,
   );
 
   if (!noErrorTracking && !success) {
@@ -106,7 +118,7 @@ async function loadAll(url: string): Promise<void> {
   yu_hight = yu_hight.concat(result.yu_hight[url] || []);
   if (!yu_hight) return;
   for (let i = 0; i < yu_hight.length; i++) {
-    yu_hight[i].isDeleted || load(yu_hight[i], i);
+    load(yu_hight[i], i);
   }
 }
 
@@ -191,4 +203,4 @@ function escapeCSString(cssString: string): string {
   return cssString.replace(/(:)/gu, '\\$1');
 }
 
-export { store, clearPage, removeHight, load, loadAll, update };
+export { store, clearPage, removeHight, load, loadAll, update, updateLevel };

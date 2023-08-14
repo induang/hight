@@ -8,6 +8,7 @@ export default function hight(
   color: string,
   textColor: string,
   hightIndex: number,
+  hightLevel?: number,
   version?: string,
 ): boolean {
   if (version === '1.0' || version === undefined) {
@@ -18,6 +19,7 @@ export default function hight(
       color,
       textColor,
       hightIndex,
+      hightLevel,
     );
   } else {
     return false;

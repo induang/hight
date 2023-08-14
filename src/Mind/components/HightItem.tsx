@@ -13,7 +13,7 @@ export default function HightItem({ hight }: HightItemProps) {
   };
 
   return (
-    <li onClick={handleScrollIntoViewClick}>
+    <li onClick={handleScrollIntoViewClick} className="">
       <a>{hight.hightText}</a>
     </li>
   );

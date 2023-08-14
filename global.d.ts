@@ -14,6 +14,7 @@ interface HightAPI {
   removeLost: Function;
   show: Function;
   updateColor: Function;
+  updateLevel: Function;
   hight: Function;
 }
 

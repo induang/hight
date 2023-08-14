@@ -1,13 +1,16 @@
 import {
   CUSTOM_HIGHT_DATA_ID,
+  CUSTOM_HIGHT_DATA_LEVEL,
   HIGHTED_CLASS,
   HOVERED_CLASS,
+  tmpColorArray,
 } from '../utils/constants';
 import {
   updateColor as updateHightColor,
+  updateLevel as updateHightLevel,
   remove as removeHight,
 } from '../core';
-import { ChromeMessage } from '../../utils/hight.type';
+import { ChromeMessage, ColorModel } from '../../utils/hight.type';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let hoverToolEl: JQuery<Node>;
@@ -15,8 +18,12 @@ let hoverToolTimeout: NodeJS.Timeout | null;
 let currentHightEl: Element;
 let hightClicked: boolean;
 let copyBTNEl = null;
-let changeColorBtnEl = null;
 let deleteBTNEl = null;
+// let changeColorBtnEl = null;
+let levelONEBTN = null;
+let levelTWOBTN = null;
+let levelThreeBTN = null;
+let levelFourBTN = null;
 
 function initializeHoverTools() {
   $.get(chrome.runtime.getURL('src/hights/hoverTool/index.html'), (data) => {
@@ -27,11 +34,19 @@ function initializeHoverTools() {
 
     copyBTNEl = hoverToolEl.find('.hight-copy-button')[0];
     deleteBTNEl = hoverToolEl.find('.hight-delete-button')[0];
-    changeColorBtnEl = hoverToolEl.find('.hight-colorChange-button')[0];
+    levelONEBTN = hoverToolEl.find('#hight-level-one-button')[0];
+    levelTWOBTN = hoverToolEl.find('#hight-level-two-button')[0];
+    levelThreeBTN = hoverToolEl.find('#hight-level-three-button')[0];
+    levelFourBTN = hoverToolEl.find('#hight-level-four-button')[0];
+    // changeColorBtnEl = hoverToolEl.find('.hight-colorChange-button')[0];
 
     copyBTNEl.addEventListener('click', onCopyBTNClicked);
     deleteBTNEl.addEventListener('click', onDeleteBTNClicked);
-    changeColorBtnEl.addEventListener('click', onChangeColorBTNClicked);
+    levelONEBTN.addEventListener('click', onUpdateHightLevelClicked);
+    levelTWOBTN.addEventListener('click', onUpdateHightLevelClicked);
+    levelThreeBTN.addEventListener('click', onUpdateHightLevelClicked);
+    levelFourBTN.addEventListener('click', onUpdateHightLevelClicked);
+    // changeColorBtnEl.addEventListener('click', onChangeColorBTNClicked);
 
     window.addEventListener('click', (e: MouseEvent) => {
       const target = e.target as Element;
@@ -101,7 +116,8 @@ function onDeleteBTNClicked(): void {
   } as ChromeMessage);
 }
 
-function onChangeColorBTNClicked(): void {
+export function onChangeColorBTNClicked(): void {
+  // TODO: fixed
   const hightId = currentHightEl.getAttribute(CUSTOM_HIGHT_DATA_ID);
   if (hightId !== null) {
     updateHightColor(Number(hightId));
@@ -111,6 +127,26 @@ function onChangeColorBTNClicked(): void {
       trackAction: 'change-color',
     } as ChromeMessage);
   }
+}
+
+async function onUpdateHightLevelClicked(e: MouseEvent): Promise<void> {
+  const hightId = currentHightEl.getAttribute(CUSTOM_HIGHT_DATA_ID);
+  const target = e.target as Element;
+  const level = target.getAttribute(CUSTOM_HIGHT_DATA_LEVEL);
+
+  console.log('hightId:', hightId, 'level:', level);
+
+  if (hightId && level) {
+    updateHightLevel(Number(hightId), Number(level));
+  }
+  chrome.runtime.sendMessage({
+    action: 'track-event',
+    trackCategory: 'hight-action',
+    trackAction: 'update-level',
+  } as ChromeMessage);
+  updateHightColor(Number(hightId), {
+    color: tmpColorArray[Number(level)],
+  } as ColorModel);
 }
 
 function onHoverToolMouseEnter() {

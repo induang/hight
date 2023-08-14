@@ -1,5 +1,9 @@
 import { initializeHightEventListener } from '../../hoverTool';
-import { DELETED_CLASS, HIGHTED_CLASS } from '../../utils/constants';
+import {
+  DELETED_CLASS,
+  HIGHTED_CLASS,
+  HIGHTED_LEVEL_CLASS,
+} from '../../utils/constants';
 import {
   HightInfoModel,
   SelectionSimplifiedModel,
@@ -12,6 +16,7 @@ export default function hightV1(
   color: string,
   textColor: string,
   hightIndex: number,
+  hightLevel = 1,
 ): boolean {
   console.log('✨✨ hight:', new Date().toISOString(), '✨✨');
   console.log('✨✨', selectionString);
@@ -24,6 +29,7 @@ export default function hightV1(
     anchorOffset: selection.anchorOffset,
     focus: $(selection.focusNode),
     focusOffset: selection.focusOffset,
+    hightLevel,
   };
 
   try {
@@ -63,6 +69,7 @@ function _recursiveWrapper(
     textColor,
     hightIndex,
     selectionString,
+    hightLevel,
   } = hightInfo;
   const selectionLength = selectionString.length;
 
@@ -146,6 +153,10 @@ function _recursiveWrapper(
     hightNode.classList.add(
       color === 'inherit' ? DELETED_CLASS : HIGHTED_CLASS,
     );
+    hightNode.classList.add(
+      color === 'inherit' ? DELETED_CLASS : HIGHTED_LEVEL_CLASS[hightLevel],
+    );
+
     hightNode.style.backgroundColor = color;
     hightNode.style.color = textColor;
     hightNode.dataset.hightId = String(hightIndex);

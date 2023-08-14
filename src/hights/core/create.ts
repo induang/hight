@@ -10,7 +10,8 @@ async function createHightBlock(
   if (!selectionString) return;
   let container = selection?.getRangeAt(0).commonAncestorContainer;
 
-  while (container && !('innerHTML' in container) && container.parentNode) {
+  // when container just text node
+  while (container && container.parentNode && !('innerHTML' in container)) {
     container = container.parentNode;
   }
 
@@ -22,6 +23,7 @@ async function createHightBlock(
     color.color,
     color.textColor,
   );
+
   const selectionSimplified: SelectionSimplifiedModel = {
     anchorNode: selection.anchorNode!,
     anchorOffset: selection.anchorOffset,
@@ -38,7 +40,7 @@ async function createHightBlock(
     hightBlockIndex,
   );
 
-  chrome.runtime.sendMessage({ action: 'hight-change' });
+  await chrome.runtime.sendMessage({ action: 'hight-change' });
 }
 
 export default createHightBlock;

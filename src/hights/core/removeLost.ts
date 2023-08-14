@@ -6,7 +6,6 @@ function removeLost(hightId: number) {
   removeHightFromStorage(
     hightId,
     window.location.hostname + window.location.pathname,
-    window.location.pathname,
   );
 
   chrome.runtime.sendMessage({ action: 'hight-change' });

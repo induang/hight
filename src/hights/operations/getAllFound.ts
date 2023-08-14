@@ -1,4 +1,4 @@
-import { HIGHTED_CLASS } from '../utils/constants';
+import { CUSTOM_HIGHT_DATA_ID, HIGHTED_CLASS } from '../utils/constants';
 
 function getAllFound(): Map<string, string> | null {
   const hights = document.getElementsByClassName(HIGHTED_CLASS);
@@ -6,7 +6,7 @@ function getAllFound(): Map<string, string> | null {
   else {
     return Array.from(hights)
       .map((hight) => [
-        hight.getAttribute('data-hight-id'),
+        hight.getAttribute(`${CUSTOM_HIGHT_DATA_ID}`),
         hight.textContent?.replace(/\s+/gmu, ' ').trim(),
       ])
       .reduce((acc, [hightId, hightText]) => {

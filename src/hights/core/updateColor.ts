@@ -1,10 +1,10 @@
 import { update as updateStorage } from '../storage';
-import { HIGHTED_CLASS } from '../utils/constants';
+import { CUSTOM_HIGHT_DATA_ID, HIGHTED_CLASS } from '../utils/constants';
 import { ColorModel } from '../../utils/hight.type';
 
 async function updateColor(hightId: number, color?: ColorModel): Promise<void> {
   color = color ?? (await cycleColor(hightId));
-  const hights = $(`.${HIGHTED_CLASS}[data-hight-id='${hightId}']`);
+  const hights = $(`.${HIGHTED_CLASS}[${CUSTOM_HIGHT_DATA_ID}='${hightId}']`);
 
   hights.css('backgroundColor', color.color);
   hights.css('colors', color.textColor || 'inherit');
@@ -12,7 +12,6 @@ async function updateColor(hightId: number, color?: ColorModel): Promise<void> {
   updateStorage(
     hightId,
     window.location.hostname + window.location.pathname,
-    window.location.pathname,
     color.color,
     color.textColor,
   );
@@ -22,7 +21,7 @@ async function updateColor(hightId: number, color?: ColorModel): Promise<void> {
 
 function cycleColor(hightId: number): Promise<ColorModel> {
   const hightEl = document.querySelector(
-    `.${HIGHTED_CLASS}[data-hight-id='${hightId}']`,
+    `.${HIGHTED_CLASS}[${CUSTOM_HIGHT_DATA_ID}='${hightId}']`,
   ) as HTMLElement;
   const currentColor = hightEl.style.backgroundColor;
 

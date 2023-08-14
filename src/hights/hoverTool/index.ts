@@ -1,4 +1,8 @@
-import { CUSTOM_HIGHT_DATA_ID, HIGHTED_CLASS } from '../utils/constants';
+import {
+  CUSTOM_HIGHT_DATA_ID,
+  HIGHTED_CLASS,
+  HOVERED_CLASS,
+} from '../utils/constants';
 import {
   updateColor as updateHightColor,
   remove as removeHight,
@@ -15,7 +19,7 @@ let changeColorBtnEl = null;
 let deleteBTNEl = null;
 
 function initializeHoverTools() {
-  $.get(chrome.runtime.getURL('src/hights/hover/index.html'), (data) => {
+  $.get(chrome.runtime.getURL('src/hights/hoverTool/index.html'), (data) => {
     hoverToolEl = $(data);
     hoverToolEl.hide();
     hoverToolEl[0].addEventListener('mouseenter', onHoverToolMouseEnter);
@@ -32,7 +36,7 @@ function initializeHoverTools() {
     window.addEventListener('click', (e: MouseEvent) => {
       const target = e.target as Element;
       if (target?.classList?.contains(HIGHTED_CLASS)) return;
-      if (target?.classList.contains('hight-colorChanger-button')) return;
+      // if (target?.classList.contains('hight-colorChanger-button')) return;
       hide();
     });
 
@@ -116,10 +120,14 @@ function onHoverToolMouseEnter() {
   }
 }
 
-function onHoverToolMouseLeave() {}
+function onHoverToolMouseLeave() {
+  if (!hightClicked) {
+    hoverToolTimeout = setTimeout(hide, 170);
+  }
+}
 
 function hide() {
-  $('.hight-hovered').removeClass('hight-hovered');
+  $(`.${HOVERED_CLASS}`).removeClass(HOVERED_CLASS);
   getHoverToolEl()?.hide();
   hoverToolTimeout = null;
   hightClicked = false;
@@ -146,7 +154,7 @@ function getHoverToolEl() {
 
 function onHightMouseEnterOrClick(e: Event) {
   const newHightEl = e.target as Element;
-  const newHightId = newHightEl.getAttribute('data-hight-id');
+  const newHightId = newHightEl.getAttribute(`${CUSTOM_HIGHT_DATA_ID}`);
 
   if (hightClicked && e.type !== 'click') {
     return;
@@ -159,7 +167,7 @@ function onHightMouseEnterOrClick(e: Event) {
     hoverToolTimeout = null;
     if (
       currentHightEl &&
-      newHightId === currentHightEl?.getAttribute('data-hight-id')
+      newHightId === currentHightEl?.getAttribute(CUSTOM_HIGHT_DATA_ID)
     ) {
       return;
     }
@@ -167,9 +175,9 @@ function onHightMouseEnterOrClick(e: Event) {
   currentHightEl = newHightEl;
   moveToolbarToHight(newHightEl, (e as MouseEvent).clientX);
 
-  $('.hight-hovered').removeClass('hight-hovered');
-  $(`.${HIGHTED_CLASS}[data-hight-id='${newHightId}']`).addClass(
-    'hight-hoverd',
+  $(`.${HOVERED_CLASS}`).removeClass(HOVERED_CLASS);
+  $(`.${HIGHTED_CLASS}[${CUSTOM_HIGHT_DATA_ID}='${newHightId}']`).addClass(
+    HOVERED_CLASS,
   );
 }
 

@@ -1,8 +1,11 @@
 import { useContext, useState } from 'react';
 import HightContext from '../contexts/HightContext';
+import { getShowHighterCursor } from '../../hights/hightCursor';
 
 export default function Operator() {
-  const [isCursorToggleChecked, setIsCursorToggleChecked] = useState(false);
+  const [isCursorToggleChecked, setIsCursorToggleChecked] = useState(
+    getShowHighterCursor(),
+  );
   const { hights, setHights } = useContext(HightContext);
 
   const handleToggleClick = async () => {
@@ -31,11 +34,11 @@ export default function Operator() {
     <div className="side-panel-header flex">
       <div className="grow">color panel</div>
       <div className="header-buttons-stack flex flex-col gap-y-1">
-        <div className="flex items-center">
-          <label className="text-base">CURSOR:</label>
+        <div className="flex items-center justify-between">
+          <label className="text-sm">Cursor:</label>
           <input
             type="checkbox"
-            className="toggle ml-1"
+            className="toggle toggle-sm ml-1"
             checked={isCursorToggleChecked}
             onClick={handleToggleClick}
           />
@@ -49,6 +52,10 @@ export default function Operator() {
         <button className="btn btn-xs btn-outline" onClick={handleCopyAllClick}>
           Copy All
         </button>
+        <div className="flex items-center justify-between">
+          <label className="text-sm">Tanslate:</label>
+          <input type="checkbox" className="toggle toggle-sm ml-1" />
+        </div>
       </div>
     </div>
   );

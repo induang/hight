@@ -32,8 +32,9 @@ export type HightModel = {
   color: string;
   textColor: string;
   href: string;
-  uuid: string; // type arrow
+  uuid: string;
   createdAt: number;
+  isDeleted: boolean;
 };
 
 export type HightErrorModel = {

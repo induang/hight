@@ -8595,10 +8595,6 @@ details.collapse summary::-webkit-details-marker {
   height: 0.5rem;
 }
 
-.w-56 {
-  width: 14rem;
-}
-
 .w-full {
   width: 100%;
 }
@@ -9732,6 +9728,11 @@ details.collapse summary::-webkit-details-marker {
   line-height: 1.5rem;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -10149,6 +10150,10 @@ details.collapse summary::-webkit-details-marker {
 
 .\[hash\:base64\] {
   hash: base64;
+}
+
+* {
+  font-family: 'Work Sans', sans-serif;
 }
 
 @media (hover:hover) {

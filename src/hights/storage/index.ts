@@ -1,10 +1,9 @@
 import { addHightError } from '../errorHandler';
 import { hight } from '../core';
-import { HightModel, SelectionSimplifiedModel } from '../../utils/hight.type';
+import { HightModel } from '../../utils/hight.type';
 
 // maybe need write in manifest.json
 const STORE_FORMAT_VERSION = chrome.runtime.getManifest().version;
-let alternativeUrlIndexOffset = 0;
 
 async function store(
   selection: Selection,
@@ -29,42 +28,102 @@ async function store(
     color,
     textColor,
     href,
-    // TODO learn crypto
     uuid: crypto.randomUUID(),
     createdAt: Date.now(),
+    isDeleted: false,
   } as HightModel);
 
-  chrome.storage.local.set({ yu_hight });
-  return index - 1 + alternativeUrlIndexOffset;
+  await chrome.storage.local.set({ yu_hight });
+  return index - 1;
 }
 
 async function update(
   hightIndex: number,
   url: string,
-  alternativeUrl: string,
   newColor: string,
   newTextColor: string,
 ): Promise<void> {
   const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
 
-  let urlToUse = url;
-  let indexToUse = hightIndex - alternativeUrlIndexOffset;
-  // QU: why
-  if (hightIndex < alternativeUrlIndexOffset) {
-    urlToUse = alternativeUrl;
-    indexToUse = hightIndex;
-  }
-
-  const hightsOfUrl = yu_hight[urlToUse];
+  const hightsOfUrl = yu_hight[url];
   if (hightsOfUrl) {
-    const hightforUpdate = hightsOfUrl[indexToUse];
+    const hightforUpdate = hightsOfUrl[hightIndex];
     if (hightforUpdate) {
       hightforUpdate.color = newColor;
       hightforUpdate.textColor = newTextColor;
       hightforUpdate.updatedAt = Date.now();
-      chrome.storage.local.set({ yu_hight });
+      if (newColor === 'inherit' && newTextColor === 'inherit')
+        hightforUpdate.isDeleted = true;
+      await chrome.storage.local.set({ yu_hight });
     }
   }
+}
+
+function load(
+  hightVal: HightModel,
+  hightIndex: number,
+  noErrorTracking?: boolean,
+): boolean {
+  const selection = {
+    anchorNode: elementFromQuery(hightVal.anchorNode)!,
+    anchorOffset: hightVal.anchorOffset,
+    focusNode: elementFromQuery(hightVal.focusNode)!,
+    focusOffset: hightVal.focusOffset,
+  };
+
+  const { color, string: selectionString, textColor, version } = hightVal;
+  const container = elementFromQuery(hightVal.container);
+
+  if (!selection.anchorNode || !selection.focusNode || !container) {
+    if (!noErrorTracking) {
+      addHightError(hightVal, hightIndex);
+    }
+    return false;
+  }
+
+  const success = hight(
+    selectionString,
+    container,
+    selection,
+    color,
+    textColor,
+    hightIndex,
+    version,
+  );
+
+  if (!noErrorTracking && !success) {
+    addHightError(hightVal, hightIndex);
+  }
+
+  return success;
+}
+
+async function loadAll(url: string): Promise<void> {
+  const result = await chrome.storage.local.get({ yu_hight: {} });
+
+  let yu_hight: Array<HightModel> = [];
+
+  yu_hight = yu_hight.concat(result.yu_hight[url] || []);
+  if (!yu_hight) return;
+  for (let i = 0; i < yu_hight.length; i++) {
+    yu_hight[i].isDeleted || load(yu_hight[i], i);
+  }
+}
+
+async function removeHight(hightIndex: number, url: string): Promise<void> {
+  const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
+
+  yu_hight[url].splice(hightIndex, 1);
+
+  await chrome.storage.local.set({ yu_hight });
+}
+
+async function clearPage(url: string): Promise<void> {
+  const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
+
+  delete yu_hight[url];
+
+  await chrome.storage.local.set({ yu_hight });
 }
 
 function elementFromQuery(storedQuery: string): Node | null {
@@ -103,88 +162,6 @@ function robustQuerySelector(query: string): Node | null {
   }
 }
 
-async function loadAll(url: string, alternativeUrl?: string): Promise<void> {
-  const result = await chrome.storage.local.get({ yu_hight: {} });
-  let yu_hight: Array<HightModel> = [];
-
-  if (alternativeUrl) {
-    yu_hight = yu_hight.concat(result.yu_hight[alternativeUrl] || []);
-  }
-  alternativeUrlIndexOffset = yu_hight.length;
-  yu_hight = yu_hight.concat(result.yu_hight[url] || []);
-  if (!yu_hight) return;
-  for (let i = 0; i < yu_hight.length; i++) {
-    load(yu_hight[i], i);
-  }
-}
-
-function load(
-  hightVal: HightModel,
-  hightIndex: number,
-  noErrorTracking?: boolean,
-): boolean {
-  const selection: SelectionSimplifiedModel = {
-    anchorNode: elementFromQuery(hightVal.anchorNode)!,
-    anchorOffset: hightVal.anchorOffset,
-    focusNode: elementFromQuery(hightVal.focusNode)!,
-    focusOffset: hightVal.focusOffset,
-  };
-
-  const { color, string: selectionString, textColor, version } = hightVal;
-  const container = elementFromQuery(hightVal.container);
-
-  if (!selection.anchorNode || !selection.focusNode || !container) {
-    if (!noErrorTracking) {
-      addHightError(hightVal, hightIndex);
-    }
-    return false;
-  }
-
-  const success = hight(
-    selectionString,
-    container,
-    selection,
-    color,
-    textColor,
-    hightIndex,
-    version,
-  );
-
-  if (!noErrorTracking && !success) {
-    addHightError(hightVal, hightIndex);
-  }
-
-  return success;
-}
-
-async function removeHight(
-  hightIndex: number,
-  url: string,
-  alternativeUrl: string,
-): Promise<void> {
-  const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
-
-  if (hightIndex < alternativeUrlIndexOffset) {
-    yu_hight[alternativeUrl].splice(hightIndex, 1);
-  } else {
-    yu_hight[url].splice(hightIndex - alternativeUrlIndexOffset, 1);
-  }
-
-  chrome.storage.local.set({ yu_hight });
-}
-
-async function clearPage(url: string, alternativeUrl?: string): Promise<void> {
-  const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
-
-  delete yu_hight[url];
-
-  if (alternativeUrl) {
-    delete yu_hight[alternativeUrl];
-  }
-
-  chrome.storage.local.set({ yu_hight });
-}
-
 function getQuery(element: Node): string {
   if ('id' in element && element.id)
     return `#${escapeCSString(element.id as string)}`;
@@ -198,7 +175,6 @@ function getQuery(element: Node): string {
   if (!('localName' in element)) {
     const index = Array.prototype.indexOf.call(parent.childNodes, element);
     return `${parentSelector}>textNode:nth-of-type(${index})`;
-    // return `${parentSelector}`;
   } else {
     const index =
       Array.from(parent.childNodes)

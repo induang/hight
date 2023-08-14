@@ -1,12 +1,15 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-types */
 /// <reference types="chrome"/>
 /// <reference types="jquery" />
 /// <reference types="node" />
 
+import { ColorModel } from './src/utils/hight.type';
+
 export {};
 
 interface HightAPI {
-  create: Function;
+  create: (color: ColorModel, selection?: Window.Selection) => void;
   remove: Function;
   removeLost: Function;
   show: Function;

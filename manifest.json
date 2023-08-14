@@ -16,7 +16,7 @@
         "assets/scripts/contentScript.bundle.js"
       ],
       "css": [
-        "src/hights/hover/index.css"
+        "src/hights/hoverTool/index.css"
       ],
       "matches": [
         "<all_urls>"

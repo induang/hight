@@ -1,10 +1,7 @@
 import { clearPage as clearPageStorage } from '../storage';
 
-function deleteAll() {
-  clearPageStorage(
-    window.location.hostname + window.location.pathname,
-    window.location.pathname,
-  );
+async function deleteAll() {
+  await clearPageStorage(window.location.hostname + window.location.pathname);
   window.location.reload();
 }
 

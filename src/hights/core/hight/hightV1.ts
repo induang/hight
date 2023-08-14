@@ -1,4 +1,4 @@
-import { initializeHightEventListener } from '../../hover';
+import { initializeHightEventListener } from '../../hoverTool';
 import { DELETED_CLASS, HIGHTED_CLASS } from '../../utils/constants';
 import {
   HightInfoModel,
@@ -14,6 +14,7 @@ export default function hightV1(
   hightIndex: number,
 ): boolean {
   console.log('✨✨ hight:', new Date().toISOString(), '✨✨');
+  console.log('✨✨', selectionString);
   const hightInfo: HightInfoModel = {
     color: color || 'yellow',
     textColor: textColor || 'inherit',

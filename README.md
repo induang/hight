@@ -4,3 +4,7 @@
 
 [2] 如选择的文字被deleted类包围也不能高亮
 
+Next To Do:
+
+①修正以上这些问题, ②赋予hight块等级, ③选择hight块展示的方式(思维导图?菜单图?daisyui)
+

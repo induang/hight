@@ -1,0 +1,60 @@
+{
+  "name": "hight",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack && npx tailwindcss -i ./src/sidePanel/index.css -o ./assets/styles/output.css --watch",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,md}'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/induang/hight.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/induang/hight/issues"
+  },
+  "homepage": "https://github.com/induang/hight#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.0.241",
+    "@types/jquery": "^3.5.16",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "css-loader": "^6.8.1",
+    "daisyui": "^3.5.1",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.0",
+    "tailwindcss": "^3.3.3",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,json}": [
+      "eslint --fix"
+    ],
+    "src/**/*.{js,ts,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "jquery": "^3.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

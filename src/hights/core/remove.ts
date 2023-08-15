@@ -20,6 +20,7 @@ function remove(hightIndex: number) {
   updateStorage(
     hightIndex,
     window.location.hostname + window.location.pathname,
+    0,
     'inherit',
     'inherit',
   );

@@ -10,19 +10,19 @@ async function createHightBlock(
   if (!selectionString) return;
   let container = selection?.getRangeAt(0).commonAncestorContainer;
 
-  // when container just text node
+  // When container just text node
   while (container && container.parentNode && !('innerHTML' in container)) {
     container = container.parentNode;
   }
 
-  const hightBlockIndex = await store(
+  const hightBlockIndex = await store({
     selection,
     container,
-    location.hostname + location.pathname,
-    location.href,
-    color.color,
-    color.textColor,
-  );
+    url: location.hostname + location.pathname,
+    href: location.href,
+    color: color.color,
+    textColor: color.textColor,
+  });
 
   const selectionSimplified: SelectionSimplifiedModel = {
     anchorNode: selection.anchorNode!,
@@ -31,14 +31,15 @@ async function createHightBlock(
     focusOffset: selection.focusOffset,
   };
 
-  hight(
+  hight({
     selectionString,
     container,
-    selectionSimplified,
-    color.color,
-    color.textColor,
-    hightBlockIndex,
-  );
+    selection: selectionSimplified,
+    color: color.color,
+    textColor: color.textColor,
+    hightIndex: hightBlockIndex,
+    hightLevel: 1,
+  });
 
   await chrome.runtime.sendMessage({ action: 'hight-change' });
 }

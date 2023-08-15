@@ -7,6 +7,7 @@ function getHights() {
       return Array.from(hightsMap, ([key, value]) => ({
         hightIndex: key,
         hightText: value,
+        // hightParent: value.other
       }));
     } else return null;
   }

@@ -2,7 +2,11 @@ import { update as updateStorage } from '../storage';
 import { CUSTOM_HIGHT_DATA_ID, HIGHTED_CLASS } from '../utils/constants';
 import { ColorModel } from '../../utils/hight.type';
 
-async function updateColor(hightId: number, color?: ColorModel): Promise<void> {
+async function updateColor(
+  hightId: number,
+  hightLevel: number,
+  color?: ColorModel,
+): Promise<void> {
   color = color ?? (await cycleColor(hightId));
   const hights = $(`.${HIGHTED_CLASS}[${CUSTOM_HIGHT_DATA_ID}='${hightId}']`);
 
@@ -12,6 +16,7 @@ async function updateColor(hightId: number, color?: ColorModel): Promise<void> {
   updateStorage(
     hightId,
     window.location.hostname + window.location.pathname,
+    hightLevel,
     color.color,
     color.textColor,
   );

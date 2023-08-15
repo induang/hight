@@ -1,23 +1,29 @@
 import { initializeHightEventListener } from '../../hoverTool';
-import {
-  DELETED_CLASS,
-  HIGHTED_CLASS,
-  HIGHTED_LEVEL_CLASS,
-} from '../../utils/constants';
+import { DELETED_CLASS, HIGHTED_CLASS } from '../../utils/constants';
 import {
   HightInfoModel,
   SelectionSimplifiedModel,
 } from '../../../utils/hight.type';
 
-export default function hightV1(
-  selectionString: string,
-  container: Node,
-  selection: SelectionSimplifiedModel,
-  color: string,
-  textColor: string,
-  hightIndex: number,
-  hightLevel = 1,
-): boolean {
+interface HightV1Params {
+  selectionString: string;
+  container: Node;
+  selection: SelectionSimplifiedModel;
+  color: string;
+  textColor: string;
+  hightIndex: number;
+  hightLevel: number;
+}
+
+export default function hightV1({
+  selectionString,
+  container,
+  selection,
+  color,
+  textColor,
+  hightIndex,
+  hightLevel,
+}: HightV1Params): boolean {
   console.log('✨✨ hight:', new Date().toISOString(), '✨✨');
   console.log('✨✨', selectionString);
   const hightInfo: HightInfoModel = {
@@ -153,13 +159,11 @@ function _recursiveWrapper(
     hightNode.classList.add(
       color === 'inherit' ? DELETED_CLASS : HIGHTED_CLASS,
     );
-    hightNode.classList.add(
-      color === 'inherit' ? DELETED_CLASS : HIGHTED_LEVEL_CLASS[hightLevel],
-    );
 
     hightNode.style.backgroundColor = color;
     hightNode.style.color = textColor;
     hightNode.dataset.hightId = String(hightIndex);
+    hightNode.dataset.hightLevelClass = String(hightLevel);
     hightNode.textContent = hightTextEl.nodeValue;
     hightTextEl.remove();
     parent?.insertBefore(hightNode, insertBeforeElement);

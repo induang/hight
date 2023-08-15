@@ -120,7 +120,7 @@ export function onChangeColorBTNClicked(): void {
   // TODO: fixed
   const hightId = currentHightEl.getAttribute(CUSTOM_HIGHT_DATA_ID);
   if (hightId !== null) {
-    updateHightColor(Number(hightId));
+    updateHightColor(Number(hightId), 0);
     chrome.runtime.sendMessage({
       action: 'track-event',
       trackCategory: 'hight-action',
@@ -136,7 +136,7 @@ async function onUpdateHightLevelClicked(e: MouseEvent): Promise<void> {
 
   console.log('hightId:', hightId, 'level:', level);
 
-  if (hightId && level) {
+  if (hightId !== null && level) {
     updateHightLevel(Number(hightId), Number(level));
   }
   chrome.runtime.sendMessage({
@@ -144,7 +144,9 @@ async function onUpdateHightLevelClicked(e: MouseEvent): Promise<void> {
     trackCategory: 'hight-action',
     trackAction: 'update-level',
   } as ChromeMessage);
-  updateHightColor(Number(hightId), {
+
+  const hightLevel = Number(level);
+  updateHightColor(Number(hightId), hightLevel, {
     color: tmpColorArray[Number(level)],
   } as ColorModel);
 }

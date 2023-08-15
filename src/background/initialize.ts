@@ -5,6 +5,7 @@ import {
   getColorOptions,
   getCurrentColor,
   getHights,
+  // getLeveledHights,
   getLostHights,
   hightText,
   loadPageHights,
@@ -160,6 +161,9 @@ function initializeMessageEventListeners() {
       case 'get-hights':
         wrapResponse(getHights(), sendResponse);
         return true;
+      // case 'get-leveled-hights':
+      //   wrapResponse(getLeveledHights(), sendResponse);
+      //   return;
       case 'get-lost-hights':
         wrapResponse(getLostHights(), sendResponse);
         return true;

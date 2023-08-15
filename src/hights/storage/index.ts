@@ -5,14 +5,23 @@ import { HightModel } from '../../utils/hight.type';
 // maybe need write in manifest.json
 const STORE_FORMAT_VERSION = chrome.runtime.getManifest().version;
 
-async function store(
-  selection: Selection,
-  container: Node,
-  url: string,
-  href: string,
-  color: string,
-  textColor: string,
-): Promise<number> {
+interface StoreParams {
+  selection: Selection;
+  container: Node;
+  url: string;
+  href: string;
+  color: string;
+  textColor: string;
+}
+
+async function store({
+  selection,
+  container,
+  url,
+  href,
+  color,
+  textColor,
+}: StoreParams): Promise<number> {
   const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
 
   if (!yu_hight[url]) yu_hight[url] = [];
@@ -40,6 +49,7 @@ async function store(
 async function update(
   hightIndex: number,
   url: string,
+  hightLevel: number,
   newColor: string,
   newTextColor: string,
 ): Promise<void> {
@@ -51,13 +61,18 @@ async function update(
     if (hightforUpdate) {
       hightforUpdate.color = newColor;
       hightforUpdate.textColor = newTextColor;
+      hightforUpdate.level = hightLevel;
       hightforUpdate.updatedAt = Date.now();
       await chrome.storage.local.set({ yu_hight });
     }
   }
 }
 
-async function updateLevel(hightIndex: number, url: string, newLevel: number) {
+async function updateLevel(
+  hightIndex: number,
+  url: string,
+  newLevel: number,
+): Promise<void> {
   const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
 
   const hightsOfUrl = yu_hight[url];
@@ -69,6 +84,8 @@ async function updateLevel(hightIndex: number, url: string, newLevel: number) {
       await chrome.storage.local.set({ yu_hight });
     }
   }
+  console.log('update url: ', url);
+  console.log('update', yu_hight[url]);
 }
 
 function load(
@@ -84,6 +101,7 @@ function load(
   };
 
   const { color, string: selectionString, textColor, level } = hightVal;
+  console.log('load level: ', level);
   const container = elementFromQuery(hightVal.container);
 
   if (!selection.anchorNode || !selection.focusNode || !container) {
@@ -92,16 +110,15 @@ function load(
     }
     return false;
   }
-
-  const success = hight(
+  const success = hight({
     selectionString,
     container,
     selection,
     color,
     textColor,
     hightIndex,
-    level,
-  );
+    hightLevel: level,
+  });
 
   if (!noErrorTracking && !success) {
     addHightError(hightVal, hightIndex);
@@ -111,12 +128,14 @@ function load(
 }
 
 async function loadAll(url: string): Promise<void> {
+  console.log('load all url: ', url);
   const result = await chrome.storage.local.get({ yu_hight: {} });
 
   let yu_hight: Array<HightModel> = [];
 
   yu_hight = yu_hight.concat(result.yu_hight[url] || []);
   if (!yu_hight) return;
+  console.log('load all:', yu_hight);
   for (let i = 0; i < yu_hight.length; i++) {
     load(yu_hight[i], i);
   }

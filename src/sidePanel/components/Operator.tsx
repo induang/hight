@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import HightContext from '../contexts/HightContext';
 import { getShowHighterCursor } from '../../hights/hightCursor';
+import Palette from './Palette';
 
 export default function Operator() {
   const [isCursorToggleChecked, setIsCursorToggleChecked] = useState(
@@ -31,8 +32,10 @@ export default function Operator() {
   };
 
   return (
-    <div className="side-panel-header flex">
-      <div className="grow">color panel</div>
+    <div className="side-panel-header flex justify-between">
+      <div className="grow">
+        <Palette />
+      </div>
       <div className="header-buttons-stack flex flex-col gap-y-1">
         <div className="flex items-center justify-between">
           <label className="text-sm">Cursor:</label>

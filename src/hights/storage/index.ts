@@ -84,8 +84,6 @@ async function updateLevel(
       await chrome.storage.local.set({ yu_hight });
     }
   }
-  console.log('update url: ', url);
-  console.log('update', yu_hight[url]);
 }
 
 function load(

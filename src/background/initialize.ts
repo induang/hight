@@ -1,11 +1,9 @@
 import {
   changeColor,
-  changeHightLevel,
   editColor,
   getColorOptions,
   getCurrentColor,
   getHights,
-  // getLeveledHights,
   getLostHights,
   hightText,
   loadPageHights,
@@ -175,9 +173,6 @@ function initializeMessageEventListeners() {
       case 'get-color-options':
         wrapResponse(getColorOptions(), sendResponse);
         return true;
-      case 'change-hight-level':
-        changeHightLevel(request.hightId, request.level);
-        return;
     }
   });
 }

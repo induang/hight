@@ -7,7 +7,6 @@ import {
 } from '../utils/constants';
 import {
   updateColor as updateHightColor,
-  updateLevel as updateHightLevel,
   remove as removeHight,
 } from '../core';
 import { ChromeMessage, ColorModel } from '../../utils/hight.type';
@@ -134,11 +133,6 @@ async function onUpdateHightLevelClicked(e: MouseEvent): Promise<void> {
   const target = e.target as Element;
   const level = target.getAttribute(CUSTOM_HIGHT_DATA_LEVEL);
 
-  console.log('hightId:', hightId, 'level:', level);
-
-  if (hightId !== null && level) {
-    updateHightLevel(Number(hightId), Number(level));
-  }
   chrome.runtime.sendMessage({
     action: 'track-event',
     trackCategory: 'hight-action',

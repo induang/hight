@@ -99,7 +99,6 @@ function load(
   };
 
   const { color, string: selectionString, textColor, level } = hightVal;
-  console.log('load level: ', level);
   const container = elementFromQuery(hightVal.container);
 
   if (!selection.anchorNode || !selection.focusNode || !container) {
@@ -126,14 +125,12 @@ function load(
 }
 
 async function loadAll(url: string): Promise<void> {
-  console.log('load all url: ', url);
   const result = await chrome.storage.local.get({ yu_hight: {} });
 
   let yu_hight: Array<HightModel> = [];
 
   yu_hight = yu_hight.concat(result.yu_hight[url] || []);
   if (!yu_hight) return;
-  console.log('load all:', yu_hight);
   for (let i = 0; i < yu_hight.length; i++) {
     load(yu_hight[i], i);
   }

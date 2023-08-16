@@ -23,7 +23,6 @@ export default function hight({
   version = '1.0',
 }: HightParams): boolean {
   if (version === '1.0' || version === undefined) {
-    console.log('after load: ', hightLevel);
     return hightV1({
       selectionString,
       container,

@@ -6,8 +6,8 @@ function getHights() {
     if (hightsMap) {
       return Array.from(hightsMap, ([key, value]) => ({
         hightIndex: key,
-        hightText: value,
-        // hightParent: value.other
+        hightText: value.hightText,
+        hightLevel: value.hightLevel,
       }));
     } else return null;
   }

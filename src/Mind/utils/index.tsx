@@ -19,28 +19,41 @@ function getFromBackgroundPage(payload: unknown, ignoreError = true) {
 }
 
 function structHights(hights: Array<HightModel>): Array<HightItemModel> {
-  if (!hights.length) return [];
+  hights = hights.filter((hight) => hight !== null);
+  if (hights.length === 0) return [];
+
   const result: Array<HightItemModel> = [];
-  console.log('handle hights:', hights);
-  // result.push({
-  //   hightIndex: hights[0].hightIndex,
-  //   hightText: hights[0].hightText,
-  // });
-  // for (let i = 1; i < hights.length; i++) {
-  //   if (!hights[i]) continue;
-  //   if (hights[i].hightLevel < hights[i - 1].hightLevel) {
-  //     result[result.length - 1].children?.push({
-  //       hightIndex: hights[i].hightIndex,
-  //       hightText: hights[i].hightText,
-  //     });
-  //   } else if (hights[i].hightLevel === hights[i - 1].hightLevel) {
-  //     result.push({
-  //       hightIndex: hights[i].hightIndex,
-  //       hightText: hights[i].hightText,
-  //     });
-  //   } else {
-  //   }
-  // }
+  const lengthOfHights = hights.length;
+  let index = 0;
+
+  function dfs(array: Array<HightItemModel>, currentIndex: number) {
+    const newItem: HightItemModel = {
+      hightIndex: hights[index].hightIndex,
+      hightLevel: hights[index].hightLevel,
+      hightText: hights[index].hightText,
+      children: [],
+    };
+    array.push(newItem);
+    index++;
+
+    if (index >= lengthOfHights) throw new Error('index overflow');
+
+    if (hights[index].hightLevel > hights[index - 1].hightLevel) {
+      dfs(array[array.length - 1].children, index);
+    } else if (hights[index].hightLevel === hights[index - 1].hightLevel) {
+      dfs(array, index);
+    } else {
+      return;
+    }
+    if (hights[index].hightLevel >= hights[currentIndex].hightLevel) {
+      dfs(array, index);
+    }
+  }
+
+  try {
+    dfs(result, 0);
+  } catch (e) {}
+
   return result;
 }
 

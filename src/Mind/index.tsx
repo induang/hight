@@ -8,7 +8,6 @@ export default function Mind() {
   const { hights, setHights } = useContext(HightContext);
   useEffect(() => {
     getFromBackgroundPage({ action: 'get-hights' }, false).then((hights) => {
-      console.log('hight: ', hights);
       const structedHights = structHights(hights as Array<HightModel>);
       setHights(structedHights);
     });
@@ -19,7 +18,6 @@ export default function Mind() {
       if (request.action === 'hight-change') {
         getFromBackgroundPage({ action: 'get-hights' }, false).then(
           (hights) => {
-            console.log('hight: ', hights);
             const structedHights = structHights(hights as Array<HightModel>);
             setHights(structedHights);
           },

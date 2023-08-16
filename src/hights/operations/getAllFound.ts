@@ -4,7 +4,10 @@ import {
   HIGHTED_CLASS,
 } from '../utils/constants';
 
-function getAllFound(): Map<string, string> | null {
+function getAllFound(): Map<
+  string,
+  { hightLevel: string; hightText: string }
+> | null {
   const hights = document.getElementsByClassName(HIGHTED_CLASS);
   if (!hights) return null;
   else {
@@ -19,7 +22,7 @@ function getAllFound(): Map<string, string> | null {
         if (acc.has(hightId)) {
           acc.set(hightId, {
             hightLevel,
-            hightText: `${acc.get(hightId).hightText} ${hightText}`,
+            hightText: `${acc.get(hightId).hightText}${hightText}`,
           });
         } else {
           acc.set(hightId, {

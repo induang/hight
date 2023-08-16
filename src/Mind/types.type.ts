@@ -6,8 +6,10 @@ export type HightModel = {
 
 export type HightItemModel = {
   hightIndex: string;
+  hightLevel: number;
   hightText: string;
-  children?: Array<HightItemModel>;
+  parentIndex?: number;
+  children: Array<HightItemModel>;
 };
 
 export interface ListenerRequest {

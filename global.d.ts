@@ -18,7 +18,7 @@ interface HightAPI {
 }
 
 interface HightOperationAPI {
-  getAllFound: () => Map<string, string> | null;
+  getAllFound: Function;
   // getAllLeveledFound: Function;
   getAllLost: Function;
   deleteAll: Function;

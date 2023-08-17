@@ -8464,6 +8464,16 @@ details.collapse summary::-webkit-details-marker {
   margin-bottom: 0.25rem;
 }
 
+.my-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.my-0\.5 {
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem;
+}
+
 .me-1 {
   -webkit-margin-end: 0.25rem;
           margin-inline-end: 0.25rem;
@@ -8475,6 +8485,10 @@ details.collapse summary::-webkit-details-marker {
 
 .mt-2 {
   margin-top: 0.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 
 .box-border {
@@ -8604,8 +8618,16 @@ details.collapse summary::-webkit-details-marker {
   height: 0.5rem;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
 .h-full {
   height: 100%;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .w-full {
@@ -8670,6 +8692,10 @@ details.collapse summary::-webkit-details-marker {
 
 .transform-none {
   transform: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .touch-auto {
@@ -9128,8 +9154,8 @@ details.collapse summary::-webkit-details-marker {
   justify-items: stretch;
 }
 
-.gap-2 {
-  gap: 0.5rem;
+.gap-1 {
+  gap: 0.25rem;
 }
 
 .gap-y-1 {
@@ -9502,6 +9528,14 @@ details.collapse summary::-webkit-details-marker {
   border-width: 1px;
 }
 
+.border-4 {
+  border-width: 4px;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
 .border-x {
   border-left-width: 1px;
   border-right-width: 1px;
@@ -9570,40 +9604,80 @@ details.collapse summary::-webkit-details-marker {
   background-color: hsl(var(--b2) / var(--tw-bg-opacity));
 }
 
-.bg-custom-primary {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 67 98 / var(--tw-bg-opacity));
-}
-
-.bg-custom-accent {
+.bg-custom-cupcake-accent {
   --tw-bg-opacity: 1;
   background-color: rgb(255 204 173 / var(--tw-bg-opacity));
 }
 
-.bg-custom-ghost {
+.bg-custom-cupcake-accent\/50 {
+  background-color: rgb(255 204 173 / 0.5);
+}
+
+.bg-custom-cupcake-ghost {
   --tw-bg-opacity: 1;
   background-color: rgb(201 200 170 / var(--tw-bg-opacity));
 }
 
-.bg-custom-secondary {
+.bg-custom-cupcake-ghost\/50 {
+  background-color: rgb(201 200 170 / 0.5);
+}
+
+.bg-custom-cupcake-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 67 98 / var(--tw-bg-opacity));
+}
+
+.bg-custom-cupcake-primary\/50 {
+  background-color: rgb(254 67 98 / 0.5);
+}
+
+.bg-custom-cupcake-secondary {
   --tw-bg-opacity: 1;
   background-color: rgb(252 157 155 / var(--tw-bg-opacity));
 }
 
-.bg-custom-primary\/50 {
-  background-color: rgb(254 67 98 / 0.5);
-}
-
-.bg-custom-accent\/50 {
-  background-color: rgb(255 204 173 / 0.5);
-}
-
-.bg-custom-ghost\/50 {
-  background-color: rgb(201 200 170 / 0.5);
-}
-
-.bg-custom-secondary\/50 {
+.bg-custom-cupcake-secondary\/50 {
   background-color: rgb(252 157 155 / 0.5);
+}
+
+.bg-custom-fluore-accent {
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 255 0 / var(--tw-bg-opacity));
+}
+
+.bg-custom-fluore-ghost {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 191 0 / var(--tw-bg-opacity));
+}
+
+.bg-custom-fluore-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(19 244 239 / var(--tw-bg-opacity));
+}
+
+.bg-custom-fluore-secondary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(104 255 0 / var(--tw-bg-opacity));
+}
+
+.bg-custom-candy-accent {
+  --tw-bg-opacity: 1;
+  background-color: rgb(214 238 252 / var(--tw-bg-opacity));
+}
+
+.bg-custom-candy-ghost {
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 248 230 / var(--tw-bg-opacity));
+}
+
+.bg-custom-candy-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 219 234 / var(--tw-bg-opacity));
+}
+
+.bg-custom-candy-secondary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(221 216 255 / var(--tw-bg-opacity));
 }
 
 .decoration-slice {
@@ -9785,6 +9859,11 @@ details.collapse summary::-webkit-details-marker {
   line-height: 1.25rem;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -9905,10 +9984,6 @@ details.collapse summary::-webkit-details-marker {
 .subpixel-antialiased {
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
-}
-
-.opacity-50 {
-  opacity: 0.5;
 }
 
 .bg-blend-normal {
@@ -10208,8 +10283,8 @@ details.collapse summary::-webkit-details-marker {
 }
 
 .hight-button {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   background-size: contain;
   background-repeat: no-repeat;

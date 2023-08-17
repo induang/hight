@@ -31,6 +31,7 @@ function structHights(hights: Array<HightModel>): Array<HightItemModel> {
       hightIndex: hights[index].hightIndex,
       hightLevel: hights[index].hightLevel,
       hightText: hights[index].hightText,
+      hightBGColor: hights[index].hightBGColor,
       children: [],
     };
     array.push(newItem);

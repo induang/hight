@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && npx tailwindcss -i ./src/sidePanel/index.css -o ./assets/styles/output.css --watch",
+    "start": "webpack",
+    "style": " npx tailwindcss -i ./src/sidePanel/index.css -o ./assets/styles/output.css --watch",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,md}'"
   },

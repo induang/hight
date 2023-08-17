@@ -8,6 +8,7 @@ function getHights() {
         hightIndex: key,
         hightText: value.hightText,
         hightLevel: value.hightLevel,
+        hightBGColor: value.hightBGColor,
       }));
     } else return null;
   }

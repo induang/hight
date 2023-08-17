@@ -2,13 +2,14 @@ export type HightModel = {
   hightIndex: string;
   hightText: string;
   hightLevel: number;
+  hightBGColor: string;
 };
 
 export type HightItemModel = {
   hightIndex: string;
   hightLevel: number;
   hightText: string;
-  parentIndex?: number;
+  hightBGColor: string;
   children: Array<HightItemModel>;
 };
 

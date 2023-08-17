@@ -9,6 +9,7 @@ import {
   loadPageHights,
   removeHight,
   removeHights,
+  selectColorTheme,
   showHight,
   storePreLevel,
   toggleHighterCursor,
@@ -143,6 +144,9 @@ function initializeMessageEventListeners() {
         return;
       case 'set-level':
         storePreLevel(request.level);
+        return;
+      case 'select-color-theme':
+        selectColorTheme(request.theme);
         return;
       case 'remove-hights':
         removeHights();

@@ -1,4 +1,5 @@
 export default async function getPreLevel() {
-  const { preHighLevel } = await chrome.storage.sync.get('preHighLevel');
+  let { preHighLevel } = await chrome.storage.sync.get('preHighLevel');
+  preHighLevel = preHighLevel === 0 ? 1 : preHighLevel;
   return preHighLevel;
 }

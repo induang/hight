@@ -12,6 +12,7 @@ async function hightText() {
   }
 
   const currentLevel = await getPreLevel();
+  console.log('current level:', currentLevel);
   const currentColor = (await getColorTheme()).colors[currentLevel - 1].color;
   console.log('current color:', currentColor);
   executeInCurrentTab({

@@ -10,6 +10,7 @@ import {
   removeHight,
   removeHights,
   showHight,
+  storePreLevel,
   toggleHighterCursor,
 } from './actions';
 import { wrapResponse } from './utils';
@@ -140,7 +141,8 @@ function initializeMessageEventListeners() {
       case 'hight':
         hightText();
         return;
-      case 'track-event':
+      case 'set-level':
+        storePreLevel(request.level);
         return;
       case 'remove-hights':
         removeHights();

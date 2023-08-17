@@ -26,6 +26,7 @@ export default function hightV1({
 }: HightV1Params): boolean {
   console.log('✨✨ hight:', new Date().toISOString(), '✨✨');
   console.log('✨✨', selectionString);
+  console.log('hight color: ', color);
   const hightInfo: HightInfoModel = {
     color: color || 'yellow',
     textColor: textColor || 'inherit',
@@ -53,6 +54,7 @@ export default function hightV1({
     initializeHightEventListener(el);
   });
 
+  chrome.runtime.sendMessage({ action: 'set-level', level: hightLevel });
   return true;
 }
 

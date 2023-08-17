@@ -4,6 +4,7 @@ import { ColorModel, SelectionSimplifiedModel } from '../../utils/hight.type';
 
 async function createHightBlock(
   color: ColorModel,
+  level: number,
   selection = window.getSelection()!,
 ) {
   const selectionString = selection?.toString();
@@ -22,6 +23,7 @@ async function createHightBlock(
     href: location.href,
     color: color.color,
     textColor: color.textColor,
+    level,
   });
 
   const selectionSimplified: SelectionSimplifiedModel = {
@@ -38,7 +40,7 @@ async function createHightBlock(
     color: color.color,
     textColor: color.textColor,
     hightIndex: hightBlockIndex,
-    hightLevel: 1,
+    hightLevel: level,
   });
 
   await chrome.runtime.sendMessage({ action: 'hight-change' });

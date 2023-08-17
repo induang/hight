@@ -19,6 +19,7 @@ function getFromBackgroundPage(payload: unknown, ignoreError = true) {
 }
 
 function structHights(hights: Array<HightModel>): Array<HightItemModel> {
+  if (hights.length === 0) return [];
   hights = hights.filter((hight) => hight !== null);
   if (hights.length === 0) return [];
 

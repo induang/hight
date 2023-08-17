@@ -27,7 +27,7 @@ async function updateColor(
     color.color,
     color.textColor,
   );
-
+  chrome.runtime.sendMessage({ action: 'set-level', level: hightLevel });
   chrome.runtime.sendMessage({ action: 'hight-change' });
 }
 

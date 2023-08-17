@@ -12,6 +12,7 @@ interface StoreParams {
   href: string;
   color: string;
   textColor: string;
+  level: number;
 }
 
 async function store({
@@ -21,6 +22,7 @@ async function store({
   href,
   color,
   textColor,
+  level,
 }: StoreParams): Promise<number> {
   const { yu_hight } = await chrome.storage.local.get({ yu_hight: {} });
 
@@ -39,7 +41,7 @@ async function store({
     href,
     uuid: crypto.randomUUID(),
     createdAt: Date.now(),
-    level: 1,
+    level,
   } as HightModel);
 
   await chrome.storage.local.set({ yu_hight });

@@ -11,3 +11,4 @@ export { default as getCurrentColor } from './getCurrentColor';
 export { default as getColorOptions } from './getColorOptions';
 export { default as loadPageHights } from './loadPageHights';
 export { default as toggleHighterCursor } from './toggleHightCursor';
+export { default as storePreLevel } from './storePreLevel';

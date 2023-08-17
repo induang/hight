@@ -4,12 +4,10 @@
 /// <reference types="jquery" />
 /// <reference types="node" />
 
-import { ColorModel } from './src/utils/hight.type';
-
 export {};
 
 interface HightAPI {
-  create: (color: ColorModel, selection?: Window.Selection) => void;
+  create: Function;
   remove: Function;
   removeLost: Function;
   show: Function;

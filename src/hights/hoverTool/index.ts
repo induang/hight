@@ -73,6 +73,8 @@ function moveToolbarToHight(hightEl: Element, position?: number) {
   const boundingRect = hightEl.getBoundingClientRect();
   const toolWidth = 108;
 
+  chrome.runtime.sendMessage({ action: 'get-color-theme' }, setColorBTNColor);
+
   const hoverTop = boundingRect.top - 45;
   getHoverToolEl()?.css({ top: hoverTop });
 

@@ -2,6 +2,7 @@ import {
   changeColor,
   editColor,
   getColorOptions,
+  getColorTheme,
   getCurrentColor,
   getHights,
   getLostHights,
@@ -162,6 +163,7 @@ function initializeMessageEventListeners() {
         return;
       case 'toggle-highter-cursor':
         toggleHighterCursor();
+        return;
       case 'get-hights':
         wrapResponse(getHights(), sendResponse);
         return true;
@@ -178,6 +180,9 @@ function initializeMessageEventListeners() {
         return true;
       case 'get-color-options':
         wrapResponse(getColorOptions(), sendResponse);
+        return true;
+      case 'get-color-theme':
+        wrapResponse(getColorTheme(), sendResponse);
         return true;
     }
   });

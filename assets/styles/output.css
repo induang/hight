@@ -8459,11 +8459,6 @@ details.collapse summary::-webkit-details-marker {
   margin: auto;
 }
 
-.my-1 {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-}
-
 .my-0 {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -8472,6 +8467,15 @@ details.collapse summary::-webkit-details-marker {
 .my-0\.5 {
   margin-top: 0.125rem;
   margin-bottom: 0.125rem;
+}
+
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 
 .me-1 {
@@ -8485,10 +8489,6 @@ details.collapse summary::-webkit-details-marker {
 
 .mt-2 {
   margin-top: 0.5rem;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem;
 }
 
 .box-border {
@@ -9528,10 +9528,6 @@ details.collapse summary::-webkit-details-marker {
   border-width: 1px;
 }
 
-.border-4 {
-  border-width: 4px;
-}
-
 .border-2 {
   border-width: 2px;
 }
@@ -9604,13 +9600,29 @@ details.collapse summary::-webkit-details-marker {
   background-color: hsl(var(--b2) / var(--tw-bg-opacity));
 }
 
+.bg-custom-candy-accent {
+  --tw-bg-opacity: 1;
+  background-color: rgb(214 238 252 / var(--tw-bg-opacity));
+}
+
+.bg-custom-candy-ghost {
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 248 230 / var(--tw-bg-opacity));
+}
+
+.bg-custom-candy-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 219 234 / var(--tw-bg-opacity));
+}
+
+.bg-custom-candy-secondary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(221 216 255 / var(--tw-bg-opacity));
+}
+
 .bg-custom-cupcake-accent {
   --tw-bg-opacity: 1;
   background-color: rgb(255 204 173 / var(--tw-bg-opacity));
-}
-
-.bg-custom-cupcake-accent\/50 {
-  background-color: rgb(255 204 173 / 0.5);
 }
 
 .bg-custom-cupcake-ghost {
@@ -9618,26 +9630,14 @@ details.collapse summary::-webkit-details-marker {
   background-color: rgb(201 200 170 / var(--tw-bg-opacity));
 }
 
-.bg-custom-cupcake-ghost\/50 {
-  background-color: rgb(201 200 170 / 0.5);
-}
-
 .bg-custom-cupcake-primary {
   --tw-bg-opacity: 1;
   background-color: rgb(254 67 98 / var(--tw-bg-opacity));
 }
 
-.bg-custom-cupcake-primary\/50 {
-  background-color: rgb(254 67 98 / 0.5);
-}
-
 .bg-custom-cupcake-secondary {
   --tw-bg-opacity: 1;
   background-color: rgb(252 157 155 / var(--tw-bg-opacity));
-}
-
-.bg-custom-cupcake-secondary\/50 {
-  background-color: rgb(252 157 155 / 0.5);
 }
 
 .bg-custom-fluore-accent {
@@ -9658,26 +9658,6 @@ details.collapse summary::-webkit-details-marker {
 .bg-custom-fluore-secondary {
   --tw-bg-opacity: 1;
   background-color: rgb(104 255 0 / var(--tw-bg-opacity));
-}
-
-.bg-custom-candy-accent {
-  --tw-bg-opacity: 1;
-  background-color: rgb(214 238 252 / var(--tw-bg-opacity));
-}
-
-.bg-custom-candy-ghost {
-  --tw-bg-opacity: 1;
-  background-color: rgb(253 248 230 / var(--tw-bg-opacity));
-}
-
-.bg-custom-candy-primary {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 219 234 / var(--tw-bg-opacity));
-}
-
-.bg-custom-candy-secondary {
-  --tw-bg-opacity: 1;
-  background-color: rgb(221 216 255 / var(--tw-bg-opacity));
 }
 
 .decoration-slice {
@@ -9854,14 +9834,14 @@ details.collapse summary::-webkit-details-marker {
   vertical-align: super;
 }
 
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .font-bold {

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CUSTOM_HIGHT_DATA_ID,
   CUSTOM_HIGHT_DATA_LEVEL,
   HIGHTED_CLASS,
   HOVERED_CLASS,
-  tmpColorArray,
 } from '../utils/constants';
 import {
   updateColor as updateHightColor,
@@ -11,18 +11,17 @@ import {
 } from '../core';
 import { ChromeMessage, ColorModel } from '../../utils/hight.type';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let hoverToolEl: JQuery<Node>;
 let hoverToolTimeout: NodeJS.Timeout | null;
 let currentHightEl: Element;
 let hightClicked: boolean;
 let copyBTNEl = null;
 let deleteBTNEl = null;
-// let changeColorBtnEl = null;
-let levelONEBTN = null;
-let levelTWOBTN = null;
-let levelThreeBTN = null;
-let levelFourBTN = null;
+let levelONEBTN: any;
+let levelTWOBTN: any;
+let levelThreeBTN: any;
+let levelFourBTN: any;
+let colors: Array<{ color: string }>;
 
 function initializeHoverTools() {
   $.get(chrome.runtime.getURL('src/hights/hoverTool/index.html'), (data) => {
@@ -37,7 +36,8 @@ function initializeHoverTools() {
     levelTWOBTN = hoverToolEl.find('#hight-level-two-button')[0];
     levelThreeBTN = hoverToolEl.find('#hight-level-three-button')[0];
     levelFourBTN = hoverToolEl.find('#hight-level-four-button')[0];
-    // changeColorBtnEl = hoverToolEl.find('.hight-colorChange-button')[0];
+
+    chrome.runtime.sendMessage({ action: 'get-color-theme' }, setColorBTNColor);
 
     copyBTNEl.addEventListener('click', onCopyBTNClicked);
     deleteBTNEl.addEventListener('click', onDeleteBTNClicked);
@@ -45,7 +45,6 @@ function initializeHoverTools() {
     levelTWOBTN.addEventListener('click', onUpdateHightLevelClicked);
     levelThreeBTN.addEventListener('click', onUpdateHightLevelClicked);
     levelFourBTN.addEventListener('click', onUpdateHightLevelClicked);
-    // changeColorBtnEl.addEventListener('click', onChangeColorBTNClicked);
 
     window.addEventListener('click', (e: MouseEvent) => {
       const target = e.target as Element;
@@ -60,6 +59,14 @@ function initializeHoverTools() {
       }
     });
   });
+}
+
+function setColorBTNColor(response: any) {
+  colors = response.response.colors;
+  levelONEBTN.style.backgroundColor = colors[0].color;
+  levelTWOBTN.style.backgroundColor = colors[1].color;
+  levelThreeBTN.style.backgroundColor = colors[2].color;
+  levelFourBTN.style.backgroundColor = colors[3].color;
 }
 
 function moveToolbarToHight(hightEl: Element, position?: number) {
@@ -115,20 +122,7 @@ function onDeleteBTNClicked(): void {
   } as ChromeMessage);
 }
 
-export function onChangeColorBTNClicked(): void {
-  // TODO: fixed
-  const hightId = currentHightEl.getAttribute(CUSTOM_HIGHT_DATA_ID);
-  if (hightId !== null) {
-    updateHightColor(Number(hightId), 0);
-    chrome.runtime.sendMessage({
-      action: 'track-event',
-      trackCategory: 'hight-action',
-      trackAction: 'change-color',
-    } as ChromeMessage);
-  }
-}
-
-async function onUpdateHightLevelClicked(e: MouseEvent): Promise<void> {
+async function onUpdateHightLevelClicked(e: MouseEvent) {
   const hightId = currentHightEl.getAttribute(CUSTOM_HIGHT_DATA_ID);
   const target = e.target as Element;
   const level = target.getAttribute(CUSTOM_HIGHT_DATA_LEVEL);
@@ -141,7 +135,7 @@ async function onUpdateHightLevelClicked(e: MouseEvent): Promise<void> {
 
   const hightLevel = Number(level);
   updateHightColor(Number(hightId), hightLevel, {
-    color: tmpColorArray[Number(level)],
+    color: colors[Number(level) - 1].color,
   } as ColorModel);
 }
 
@@ -168,13 +162,13 @@ function hide() {
 function initializeHightEventListener(hightElement: Node) {
   hightElement.addEventListener('mouseenter', onHightMouseEnterOrClick);
   hightElement.addEventListener('click', onHightMouseEnterOrClick);
-  hightElement.addEventListener('mouseleave', onHightMouseLeave);
+  hightElement.addEventListener('mouseleave', onHoverToolMouseLeave);
 }
 
 function removeHightEventListeners(hightElement: Node) {
   hightElement.removeEventListener('mouseenter', onHightMouseEnterOrClick);
   hightElement.removeEventListener('click', onHightMouseEnterOrClick);
-  hightElement.removeEventListener('mouseleave', onHightMouseLeave);
+  hightElement.removeEventListener('mouseleave', onHoverToolMouseLeave);
 }
 
 function getHoverToolEl() {
@@ -211,12 +205,6 @@ function onHightMouseEnterOrClick(e: Event) {
   $(`.${HIGHTED_CLASS}[${CUSTOM_HIGHT_DATA_ID}='${newHightId}']`).addClass(
     HOVERED_CLASS,
   );
-}
-
-function onHightMouseLeave() {
-  if (!hightClicked) {
-    hoverToolTimeout = setTimeout(hide, 170);
-  }
 }
 
 export {

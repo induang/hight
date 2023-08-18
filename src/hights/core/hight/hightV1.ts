@@ -24,9 +24,6 @@ export default function hightV1({
   hightIndex,
   hightLevel,
 }: HightV1Params): boolean {
-  console.log('✨✨ hight:', new Date().toISOString(), '✨✨');
-  console.log('✨✨', selectionString);
-  console.log('hight color: ', color);
   const hightInfo: HightInfoModel = {
     color: color || 'yellow',
     textColor: textColor || 'inherit',

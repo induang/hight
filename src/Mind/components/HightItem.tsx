@@ -31,7 +31,7 @@ export default function HightItem({ hight }: HightItemProps) {
             className="rounded"
             style={{ backgroundColor: summaryBGStyle }}
           >
-            {hight.hightText}
+            <label>{hight.hightText}</label>
           </summary>
           <Higths hights={hight.children} />
         </details>

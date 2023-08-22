@@ -8474,6 +8474,11 @@ details.collapse summary::-webkit-details-marker {
   margin-bottom: 0.25rem;
 }
 
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -9620,6 +9625,26 @@ details.collapse summary::-webkit-details-marker {
   background-color: rgb(221 216 255 / var(--tw-bg-opacity));
 }
 
+.bg-custom-cupcake-accent {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 204 173 / var(--tw-bg-opacity));
+}
+
+.bg-custom-cupcake-ghost {
+  --tw-bg-opacity: 1;
+  background-color: rgb(201 200 170 / var(--tw-bg-opacity));
+}
+
+.bg-custom-cupcake-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 67 98 / var(--tw-bg-opacity));
+}
+
+.bg-custom-cupcake-secondary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(252 157 155 / var(--tw-bg-opacity));
+}
+
 .bg-custom-fluore-accent {
   --tw-bg-opacity: 1;
   background-color: rgb(250 255 0 / var(--tw-bg-opacity));
@@ -9638,26 +9663,6 @@ details.collapse summary::-webkit-details-marker {
 .bg-custom-fluore-secondary {
   --tw-bg-opacity: 1;
   background-color: rgb(104 255 0 / var(--tw-bg-opacity));
-}
-
-.bg-custom-cupcake-primary {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 67 98 / var(--tw-bg-opacity));
-}
-
-.bg-custom-cupcake-accent {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 204 173 / var(--tw-bg-opacity));
-}
-
-.bg-custom-cupcake-ghost {
-  --tw-bg-opacity: 1;
-  background-color: rgb(201 200 170 / var(--tw-bg-opacity));
-}
-
-.bg-custom-cupcake-secondary {
-  --tw-bg-opacity: 1;
-  background-color: rgb(252 157 155 / var(--tw-bg-opacity));
 }
 
 .decoration-slice {

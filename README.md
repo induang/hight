@@ -33,3 +33,15 @@
 
 
 #### 部分功能尚未实现, 点击没有反应那就是我的问题;
+
+## 技术栈:
+contentScript 部分 使用 JQuery;
+
+service worker 部分 使用 原声 JS;
+
+side panel 使用 React;
+
+使用 webpack 构建整个项目;
+
+
+

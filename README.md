@@ -37,7 +37,7 @@
 ## 技术栈:
 contentScript 部分 使用 JQuery;
 
-service worker 部分 使用 原声 JS;
+service worker 部分 使用 原生 JS;
 
 side panel 使用 React;
 
